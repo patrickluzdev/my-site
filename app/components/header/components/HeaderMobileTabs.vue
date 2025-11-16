@@ -1,6 +1,6 @@
 <template>
     <nav class="md:hidden bg-white border-b border-border">
-        <div class="container mx-auto px-4">
+        <div class="max-w-6xl mx-auto px-4">
             <div class="flex items-center justify-around">
                 <NuxtLink
                     v-for="link in navigation"

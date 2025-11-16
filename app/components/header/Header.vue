@@ -1,7 +1,7 @@
 <template>
     <div class="sticky top-0 z-50">
         <header class="bg-white border-b border-border">
-            <div class="container mx-auto px-4">
+            <div class="max-w-6xl mx-auto px-4">
                 <div class="flex items-center justify-between h-16">
                     <HeaderProfile />
                     <HeaderDesktopNav />

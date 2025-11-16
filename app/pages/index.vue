@@ -1,10 +1,17 @@
 <template>
-  <div>
-    <main class="container mx-auto px-4 py-8">
-      <h1 class="text-4xl font-bold mb-6">Bem-vindo!</h1>
-      <p class="text-muted-foreground">
-        Olá, eu sou Patrick Luz. Bem-vindo ao meu site pessoal.
-      </p>
+  <div class="min-h-screen pb-16">
+    <main class="max-w-6xl mx-auto px-4 py-8">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <div class="lg:col-span-7 space-y-6">
+          <AboutSection />
+
+          <PostsList />
+        </div>
+
+        <div class="lg:col-span-5 space-y-6">
+          <ContactWidget />
+        </div>
+      </div>
     </main>
   </div>
 </template>

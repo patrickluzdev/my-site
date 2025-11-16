@@ -7,7 +7,6 @@
       </p>
 
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <!-- Exemplo de card de projeto -->
         <div class="border border-border rounded-lg p-6 hover:shadow-lg transition-shadow">
           <h3 class="font-semibold text-lg mb-2">Projeto em breve</h3>
           <p class="text-sm text-muted-foreground">

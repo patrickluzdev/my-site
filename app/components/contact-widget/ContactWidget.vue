@@ -69,7 +69,7 @@
         class="flex items-center gap-3 px-4 py-3 bg-muted hover:bg-muted/80 rounded-xl transition-colors group"
       >
         <div class="w-12 h-12 rounded-full bg-green-500 flex items-center justify-center flex-shrink-0">
-          <Icon name="mdi:whatsapp" class="w-7 h-7 text-white" />
+          <Icon name="mdi:whatsapp" class="text-white" :size="iconSize"/>
         </div>
         <div class="flex-1 min-w-0">
           <p class="font-semibold text-sm">WhatsApp</p>
@@ -83,7 +83,7 @@
         class="flex items-center gap-3 px-4 py-3 bg-muted hover:bg-muted/80 rounded-xl transition-colors group"
       >
         <div class="w-12 h-12 rounded-full bg-blue-500 flex items-center justify-center flex-shrink-0">
-          <Icon name="mdi:email" class="w-7 h-7 text-white" />
+          <Icon name="mdi:email" class="text-white" :size="iconSize"/>
         </div>
         <div class="flex-1 min-w-0">
           <p class="font-semibold text-sm">Email</p>
@@ -98,14 +98,14 @@
         rel="noopener noreferrer"
         class="flex items-center gap-3 px-4 py-3 bg-muted hover:bg-muted/80 rounded-xl transition-colors group"
       >
-        <div class="w-12 h-12 rounded-full bg-blue-700 flex items-center justify-center flex-shrink-0">
-          <Icon name="mdi:linkedin" class="w-7 h-7 text-white" />
+        <div class="w-12 h-12 rounded-full bg-blue-700 flex items-center justify-center shrink-0">
+          <Icon name="mdi:linkedin" class="text-white" :size="24"/>
         </div>
         <div class="flex-1 min-w-0">
           <p class="font-semibold text-sm">LinkedIn</p>
           <p class="text-xs text-muted-foreground">Perfil profissional</p>
         </div>
-        <Icon name="lucide:external-link" class="w-4 h-4 text-muted-foreground group-hover:text-foreground" />
+        <Icon name="lucide:external-link" class="text-muted-foreground group-hover:text-foreground" :size="iconSize" />
       </a>
     </div>
     </CardContent>
@@ -113,6 +113,8 @@
 </template>
 
 <script setup lang="ts">
+const iconSize = 24
+
 const form = ref({
   name: '',
   email: '',

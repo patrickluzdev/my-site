@@ -2,33 +2,7 @@
   <footer class="bg-white border-t border-border mt-auto">
     <div class="max-w-6xl mx-auto px-4 py-12">
       <!-- Main Footer Content -->
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
-        <!-- Brand / About -->
-        <div class="space-y-4">
-          <div class="flex items-center gap-2">
-            <Avatar class="w-10 h-10 rounded-lg">
-              <div class="w-full h-full bg-muted flex items-center justify-center">
-                <AvatarImage
-                  src="/logo.jpeg"
-                  alt="Patrick Luz"
-                  class="object-cover"
-                />
-                <AvatarFallback class="bg-muted text-foreground">
-                  PL
-                </AvatarFallback>
-              </div>
-            </Avatar>
-            <span class="font-semibold text-lg">Patrick Luz</span>
-          </div>
-          <p class="text-sm text-muted-foreground">
-            Desenvolvedor Full Stack criando soluções web modernas e escaláveis.
-          </p>
-          <div class="flex items-center gap-2 text-sm">
-            <div class="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-            <span class="text-muted-foreground">Disponível para projetos</span>
-          </div>
-        </div>
-
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-8">
         <!-- Navigation -->
         <div>
           <h3 class="font-semibold mb-4">Navegação</h3>
@@ -83,19 +57,18 @@
           </ul>
         </div>
 
-        <!-- Contact & Social -->
         <div>
           <h3 class="font-semibold mb-4">Contato</h3>
           <ul class="space-y-3 mb-4">
             <li>
               <a href="mailto:contato@patrickluz.dev" class="text-sm text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2">
-                <Icon name="lucide:mail" class="w-4 h-4" />
+                <Icon name="mdi:email" class="w-5 h-5 text-blue-500" :size="iconSize"/>
                 contato@patrickluz.dev
               </a>
             </li>
             <li>
               <a href="https://wa.me/5511999999999" target="_blank" rel="noopener noreferrer" class="text-sm text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2">
-                <Icon name="lucide:phone" class="w-4 h-4" />
+                <Icon name="mdi:whatsapp" class="w-5 h-5 text-green-500" :size="iconSize" />
                 WhatsApp
               </a>
             </li>
@@ -103,49 +76,22 @@
 
           <div class="flex items-center gap-3">
             <a
-              href="https://github.com/patrickluz"
+              v-for="social in socialLinks"
+              :key="social.name"
+              :href="social.url"
               target="_blank"
               rel="noopener noreferrer"
-              class="w-9 h-9 rounded-full bg-muted hover:bg-muted/80 flex items-center justify-center transition-colors"
-              aria-label="GitHub"
+              class="hover:scale-110 transition-transform"
+              :aria-label="social.name"
             >
-              <Icon name="mdi:github" class="w-5 h-5" />
-            </a>
-            <a
-              href="https://linkedin.com/in/patrickluz"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="w-9 h-9 rounded-full bg-muted hover:bg-muted/80 flex items-center justify-center transition-colors"
-              aria-label="LinkedIn"
-            >
-              <Icon name="mdi:linkedin" class="w-5 h-5" />
-            </a>
-            <a
-              href="https://twitter.com/patrickluz"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="w-9 h-9 rounded-full bg-muted hover:bg-muted/80 flex items-center justify-center transition-colors"
-              aria-label="Twitter"
-            >
-              <Icon name="mdi:twitter" class="w-5 h-5" />
-            </a>
-            <a
-              href="https://instagram.com/patrickluz"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="w-9 h-9 rounded-full bg-muted hover:bg-muted/80 flex items-center justify-center transition-colors"
-              aria-label="Instagram"
-            >
-              <Icon name="mdi:instagram" class="w-5 h-5" />
+              <Icon :name="social.icon" :size="iconSize" :class="social.colorClass" />
             </a>
           </div>
         </div>
       </div>
 
-      <!-- Separator -->
       <Separator class="mb-6" />
 
-      <!-- Bottom Footer -->
       <div class="flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-muted-foreground">
         <p>
           © {{ currentYear }} Patrick Luz. Todos os direitos reservados.
@@ -164,8 +110,35 @@
 </template>
 
 <script setup lang="ts">
-import { Avatar, AvatarImage, AvatarFallback } from '~/components/ui/avatar'
+const iconSize = 24
 import { Separator } from '~/components/ui/separator'
 
 const currentYear = new Date().getFullYear()
+
+const socialLinks = [
+  {
+    name: 'GitHub',
+    url: 'https://github.com/patrickluz',
+    icon: 'mdi:github',
+    colorClass: 'text-gray-800 dark:text-gray-200'
+  },
+  {
+    name: 'LinkedIn',
+    url: 'https://linkedin.com/in/patrickluz',
+    icon: 'mdi:linkedin',
+    colorClass: 'text-blue-600'
+  },
+  {
+    name: 'Twitter',
+    url: 'https://twitter.com/patrickluz',
+    icon: 'mdi:twitter',
+    colorClass: 'text-sky-500'
+  },
+  {
+    name: 'Instagram',
+    url: 'https://instagram.com/patrickluz',
+    icon: 'mdi:instagram',
+    colorClass: 'text-pink-600'
+  }
+]
 </script>

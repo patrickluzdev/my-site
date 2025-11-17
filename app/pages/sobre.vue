@@ -39,57 +39,25 @@
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
+            <div v-if="pending" class="text-center py-8 text-muted-foreground">
+              Carregando...
+            </div>
+            <div v-else class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div v-for="(categorySkills, category) in skills" :key="category">
                 <h3 class="font-semibold mb-3 flex items-center gap-2">
-                  <Icon name="lucide:layout" class="w-4 h-4" />
-                  Frontend
+                  <Icon :name="categoryIcons[category] || 'lucide:circle'" class="w-4 h-4" />
+                  {{ category }}
                 </h3>
                 <div class="flex flex-wrap gap-2">
-                  <Badge variant="secondary">Vue.js</Badge>
-                  <Badge variant="secondary">Nuxt</Badge>
-                  <Badge variant="secondary">React</Badge>
-                  <Badge variant="secondary">Next.js</Badge>
-                  <Badge variant="secondary">TypeScript</Badge>
-                  <Badge variant="secondary">Tailwind CSS</Badge>
-                </div>
-              </div>
-              <div>
-                <h3 class="font-semibold mb-3 flex items-center gap-2">
-                  <Icon name="lucide:server" class="w-4 h-4" />
-                  Backend
-                </h3>
-                <div class="flex flex-wrap gap-2">
-                  <Badge variant="secondary">Node.js</Badge>
-                  <Badge variant="secondary">Express</Badge>
-                  <Badge variant="secondary">Prisma</Badge>
-                  <Badge variant="secondary">PostgreSQL</Badge>
-                  <Badge variant="secondary">MongoDB</Badge>
-                  <Badge variant="secondary">Redis</Badge>
-                </div>
-              </div>
-              <div>
-                <h3 class="font-semibold mb-3 flex items-center gap-2">
-                  <Icon name="lucide:cloud" class="w-4 h-4" />
-                  DevOps & Cloud
-                </h3>
-                <div class="flex flex-wrap gap-2">
-                  <Badge variant="secondary">AWS</Badge>
-                  <Badge variant="secondary">Docker</Badge>
-                  <Badge variant="secondary">CI/CD</Badge>
-                  <Badge variant="secondary">Git</Badge>
-                </div>
-              </div>
-              <div>
-                <h3 class="font-semibold mb-3 flex items-center gap-2">
-                  <Icon name="lucide:sparkles" class="w-4 h-4" />
-                  Outras
-                </h3>
-                <div class="flex flex-wrap gap-2">
-                  <Badge variant="secondary">RESTful APIs</Badge>
-                  <Badge variant="secondary">GraphQL</Badge>
-                  <Badge variant="secondary">WebSockets</Badge>
-                  <Badge variant="secondary">Testing</Badge>
+                  <Badge
+                    v-for="skill in categorySkills"
+                    :key="skill.name"
+                    variant="secondary"
+                    class="flex items-center gap-1.5"
+                  >
+                    <Icon v-if="skill.icon" :name="getIconName(skill.icon)" class="w-3.5 h-3.5" />
+                    {{ skill.name }}
+                  </Badge>
                 </div>
               </div>
             </div>
@@ -105,23 +73,23 @@
             </CardTitle>
           </CardHeader>
           <CardContent class="space-y-6">
-            <div class="border-l-2 border-primary pl-4 space-y-4">
-              <div>
-                <h3 class="font-semibold">Desenvolvedor Full-Stack</h3>
-                <p class="text-sm text-muted-foreground">2022 - Presente</p>
-                <p class="text-muted-foreground mt-2">
-                  Desenvolvimento de aplicações web escaláveis utilizando tecnologias modernas.
-                  Foco em performance, UX e melhores práticas de desenvolvimento.
+            <div v-if="pending" class="text-center py-8 text-muted-foreground">
+              Carregando...
+            </div>
+            <div v-else-if="workExperiences.length > 0" class="border-l-2 border-primary pl-4 space-y-4">
+              <div v-for="exp in workExperiences" :key="exp.id || exp.position">
+                <h3 class="font-semibold">{{ exp.position }}</h3>
+                <p v-if="exp.companyName" class="text-sm font-medium text-muted-foreground">
+                  {{ exp.companyName }}
+                </p>
+                <p class="text-sm text-muted-foreground">{{ exp.period }}</p>
+                <p v-if="exp.description" class="text-muted-foreground mt-2">
+                  {{ exp.description }}
                 </p>
               </div>
-              <div>
-                <h3 class="font-semibold">Desenvolvedor Frontend</h3>
-                <p class="text-sm text-muted-foreground">2020 - 2022</p>
-                <p class="text-muted-foreground mt-2">
-                  Criação de interfaces responsivas e interativas. Trabalho em equipe utilizando
-                  metodologias ágeis.
-                </p>
-              </div>
+            </div>
+            <div v-else class="text-center py-8 text-muted-foreground">
+              Nenhuma experiência cadastrada
             </div>
           </CardContent>
         </Card>
@@ -135,11 +103,23 @@
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div class="space-y-4">
-              <div>
-                <h3 class="font-semibold">Ciência da Computação</h3>
-                <p class="text-sm text-muted-foreground">Bacharelado - 2024</p>
+            <div v-if="pending" class="text-center py-8 text-muted-foreground">
+              Carregando...
+            </div>
+            <div v-else-if="education.length > 0" class="space-y-4">
+              <div v-for="edu in education" :key="edu.id || edu.degree">
+                <h3 class="font-semibold">{{ edu.fieldOfStudy }}</h3>
+                <p class="text-sm text-muted-foreground">{{ edu.degree }} - {{ edu.period }}</p>
+                <p v-if="edu.institutionName" class="text-sm text-muted-foreground">
+                  {{ edu.institutionName }}
+                </p>
+                <p v-if="edu.description" class="text-muted-foreground mt-2">
+                  {{ edu.description }}
+                </p>
               </div>
+            </div>
+            <div v-else class="text-center py-8 text-muted-foreground">
+              Nenhuma formação cadastrada
             </div>
           </CardContent>
         </Card>
@@ -155,4 +135,112 @@ import { Badge } from '~/components/ui/badge'
 definePageMeta({
   layout: 'default'
 })
+
+// Buscar dados da API
+const { data: aboutData, pending } = await useFetch('/api/about')
+
+// Dados padrão caso não haja dados na API
+const defaultData = {
+  skills: {
+    'Frontend': [
+      { name: 'Vue.js' },
+      { name: 'Nuxt' },
+      { name: 'React' },
+      { name: 'Next.js' },
+      { name: 'TypeScript' },
+      { name: 'Tailwind CSS' }
+    ],
+    'Backend': [
+      { name: 'Node.js' },
+      { name: 'Express' },
+      { name: 'Prisma' },
+      { name: 'PostgreSQL' },
+      { name: 'MongoDB' },
+      { name: 'Redis' }
+    ],
+    'DevOps & Cloud': [
+      { name: 'AWS' },
+      { name: 'Docker' },
+      { name: 'CI/CD' },
+      { name: 'Git' }
+    ],
+    'Outras': [
+      { name: 'RESTful APIs' },
+      { name: 'GraphQL' },
+      { name: 'WebSockets' },
+      { name: 'Testing' }
+    ]
+  },
+  workExperiences: [
+    {
+      position: 'Desenvolvedor Full-Stack',
+      period: '2022 - Presente',
+      description: 'Desenvolvimento de aplicações web escaláveis utilizando tecnologias modernas. Foco em performance, UX e melhores práticas de desenvolvimento.'
+    },
+    {
+      position: 'Desenvolvedor Frontend',
+      period: '2020 - 2022',
+      description: 'Criação de interfaces responsivas e interativas. Trabalho em equipe utilizando metodologias ágeis.'
+    }
+  ],
+  education: [
+    {
+      degree: 'Bacharelado',
+      fieldOfStudy: 'Ciência da Computação',
+      period: '2024'
+    }
+  ]
+}
+
+const skills = computed(() => aboutData.value?.skills ?? defaultData.skills)
+const workExperiences = computed(() => aboutData.value?.workExperiences ?? defaultData.workExperiences)
+const education = computed(() => aboutData.value?.education ?? defaultData.education)
+
+// Mapear categorias para ícones
+const categoryIcons: Record<string, string> = {
+  'Frontend': 'lucide:layout',
+  'frontend': 'lucide:layout',
+  'Backend': 'lucide:server',
+  'backend': 'lucide:server',
+  'DevOps & Cloud': 'lucide:cloud',
+  'devops': 'lucide:cloud',
+  'Outras': 'lucide:sparkles',
+  'outras': 'lucide:sparkles'
+}
+
+// Mapear nomes de tecnologias para ícones
+const techIconMap: Record<string, string> = {
+  'JavaScript': 'vscode-icons:file-type-js-official',
+  'TypeScript': 'vscode-icons:file-type-typescript-official',
+  'React': 'vscode-icons:file-type-reactjs',
+  'Vue.js': 'vscode-icons:file-type-vue',
+  'Node.js': 'vscode-icons:file-type-node',
+  'PostgreSQL': 'vscode-icons:file-type-pgsql',
+  'MongoDB': 'vscode-icons:file-type-mongo',
+  'Docker': 'vscode-icons:file-type-docker2',
+  'AWS': 'skill-icons:aws-dark',
+  'Git': 'vscode-icons:file-type-git',
+  'Nuxt': 'vscode-icons:file-type-nuxt',
+  'Next.js': 'vscode-icons:file-type-next',
+  'Express': 'simple-icons:express',
+  'Prisma': 'vscode-icons:file-type-light-prisma',
+  'Redis': 'vscode-icons:file-type-redis',
+  'Tailwind CSS': 'vscode-icons:file-type-tailwind',
+  'GraphQL': 'vscode-icons:file-type-graphql',
+  'RESTful APIs': 'lucide:api',
+  'WebSockets': 'lucide:radio',
+  'Testing': 'lucide:flask-conical',
+  'CI/CD': 'lucide:git-merge'
+}
+
+// Função para obter o nome do ícone
+const getIconName = (iconName: string): string => {
+  // Primeiro tenta encontrar no mapa de ícones de tecnologia
+  if (techIconMap[iconName]) {
+    return techIconMap[iconName]
+  }
+
+  // Se não encontrar, usa o ícone padrão
+  return 'lucide:circle'
+}
 </script>

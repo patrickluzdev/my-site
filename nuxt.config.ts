@@ -22,5 +22,10 @@ export default defineNuxtConfig({
   shadcn: {
     prefix: '',
     componentDir: '@/components/ui'
+  },
+  icon: {
+    serverBundle: {
+      collections: ['lucide', 'vscode-icons', 'skill-icons', 'simple-icons']
+    }
   }
 })

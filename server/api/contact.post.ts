@@ -6,7 +6,6 @@ const contactSchema = z.object({
   email: z.string().email('Email inválido'),
   subject: z.string().optional(),
   message: z.string()
-    .min(10, 'Mensagem muito curta (mínimo 10 caracteres)')
     .max(5000, 'Mensagem muito longa (máximo 5000 caracteres)'),
 })
 
@@ -44,9 +43,10 @@ export default defineEventHandler(async (event) => {
     console.error('Error creating contact message:', error)
 
     if (error instanceof z.ZodError) {
+      const firstError = error.errors?.[0]
       throw createError({
         statusCode: 400,
-        statusMessage: error.errors[0].message,
+        statusMessage: firstError?.message || 'Dados inválidos',
       })
     }
 

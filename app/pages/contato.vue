@@ -8,9 +8,9 @@
         </p>
       </div>
 
-      <div class="grid grid-cols-1 lg:grid-cols-5 gap-8">
+      <div class="grid grid-cols-1 lg:grid-cols-5 gap-8 mb-8">
         <div class="lg:col-span-3">
-          <Card>
+          <Card class="h-full">
             <CardHeader>
               <CardTitle class="text-2xl">Envie uma mensagem 💬</CardTitle>
               <div class="space-y-2 mt-3">
@@ -86,23 +86,33 @@
                   type="submit"
                   class="w-full h-14 text-lg rounded-full"
                   size="lg"
+                  :disabled="isSubmitting"
                 >
-                  <Icon name="lucide:send" class="w-5 h-5 mr-2" />
-                  Enviar Mensagem
+                  <Icon
+                    v-if="!isSubmitting"
+                    name="lucide:send"
+                    class="w-5 h-5 mr-2"
+                  />
+                  <Icon
+                    v-else
+                    name="lucide:loader-2"
+                    class="w-5 h-5 mr-2 animate-spin"
+                  />
+                  {{ isSubmitting ? 'Enviando...' : 'Enviar Mensagem' }}
                 </Button>
               </form>
             </CardContent>
           </Card>
         </div>
 
-        <div class="lg:col-span-2 space-y-6">
-          <Card>
+        <div class="lg:col-span-2 flex flex-col gap-6">
+          <Card class="flex-1">
             <CardHeader>
-              <CardTitle class="text-lg">Contato Direto</CardTitle>
+              <CardTitle class="text-lg">Contato Direto 📞</CardTitle>
             </CardHeader>
             <CardContent class="space-y-3">
               <a
-                href="https://wa.me/5511999999999"
+                :href="contactLinks.whatsapp"
                 target="_blank"
                 rel="noopener noreferrer"
                 class="flex items-center gap-3 px-4 py-3 bg-muted hover:bg-muted/80 rounded-xl transition-colors group"
@@ -118,7 +128,7 @@
               </a>
 
               <a
-                href="mailto:contato@patrickluz.dev"
+                :href="`mailto:${contactLinks.email}`"
                 class="flex items-center gap-3 px-4 py-3 bg-muted hover:bg-muted/80 rounded-xl transition-colors group"
               >
                 <div class="w-12 h-12 rounded-full bg-blue-500 flex items-center justify-center flex-shrink-0">
@@ -126,13 +136,13 @@
                 </div>
                 <div class="flex-1 min-w-0">
                   <p class="font-semibold text-sm">Email</p>
-                  <p class="text-xs text-muted-foreground truncate">contato@patrickluz.dev</p>
+                  <p class="text-xs text-muted-foreground truncate">{{ contactLinks.email }}</p>
                 </div>
                 <Icon name="lucide:external-link" class="w-4 h-4 text-muted-foreground group-hover:text-foreground" />
               </a>
 
               <a
-                href="https://linkedin.com/in/patrickluz"
+                :href="contactLinks.linkedin"
                 target="_blank"
                 rel="noopener noreferrer"
                 class="flex items-center gap-3 px-4 py-3 bg-muted hover:bg-muted/80 rounded-xl transition-colors group"
@@ -149,13 +159,13 @@
             </CardContent>
           </Card>
 
-          <Card>
+          <Card class="flex-1">
             <CardHeader>
-              <CardTitle class="text-lg">Redes Sociais</CardTitle>
+              <CardTitle class="text-lg">Redes Sociais 🌐</CardTitle>
             </CardHeader>
             <CardContent class="space-y-3">
               <a
-                href="https://github.com/patrickluz"
+                :href="contactLinks.github"
                 target="_blank"
                 rel="noopener noreferrer"
                 class="flex items-center gap-3 px-4 py-3 bg-muted hover:bg-muted/80 rounded-xl transition-colors group"
@@ -170,7 +180,7 @@
               </a>
 
               <a
-                href="https://twitter.com/patrickluz"
+                :href="contactLinks.twitter"
                 target="_blank"
                 rel="noopener noreferrer"
                 class="flex items-center gap-3 px-4 py-3 bg-muted hover:bg-muted/80 rounded-xl transition-colors group"
@@ -185,7 +195,7 @@
               </a>
 
               <a
-                href="https://instagram.com/patrickluz"
+                :href="contactLinks.instagram"
                 target="_blank"
                 rel="noopener noreferrer"
                 class="flex items-center gap-3 px-4 py-3 bg-muted hover:bg-muted/80 rounded-xl transition-colors group"
@@ -200,36 +210,107 @@
               </a>
             </CardContent>
           </Card>
-
-          <Card>
-            <CardHeader>
-              <CardTitle class="text-lg">Disponibilidade</CardTitle>
-            </CardHeader>
-            <CardContent class="space-y-3 text-sm text-muted-foreground">
-              <div class="flex items-start gap-2">
-                <Icon name="lucide:check-circle" class="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
-                <span>Projetos de desenvolvimento web</span>
-              </div>
-              <div class="flex items-start gap-2">
-                <Icon name="lucide:check-circle" class="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
-                <span>Automações e integrações</span>
-              </div>
-              <div class="flex items-start gap-2">
-                <Icon name="lucide:check-circle" class="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
-                <span>Consultoria técnica</span>
-              </div>
-              <div class="flex items-start gap-2">
-                <Icon name="lucide:check-circle" class="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
-                <span>Trabalho freelance</span>
-              </div>
-              <div class="flex items-start gap-2">
-                <Icon name="lucide:check-circle" class="w-4 h-4 text-green-500 mt-0.5 shrink-0" />
-                <span>Mentorias e ensino</span>
-              </div>
-            </CardContent>
-          </Card>
         </div>
       </div>
+
+      <Card class="border-2">
+        <CardHeader>
+          <CardTitle class="text-2xl">Disponibilidade & Serviços ✨</CardTitle>
+        </CardHeader>
+
+        <CardContent>
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div class="space-y-4">
+              <div class="flex items-center gap-2">
+                <Icon name="lucide:briefcase" class="w-5 h-5 text-blue-500" />
+                <h3 class="font-semibold">Tipos de Projeto</h3>
+              </div>
+              <div class="space-y-2.5 text-sm">
+                <div class="flex items-start gap-2">
+                  <Icon name="lucide:check-circle" class="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
+                  <span class="text-muted-foreground">Aplicações web completas</span>
+                </div>
+                <div class="flex items-start gap-2">
+                  <Icon name="lucide:check-circle" class="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
+                  <span class="text-muted-foreground">APIs e backend</span>
+                </div>
+                <div class="flex items-start gap-2">
+                  <Icon name="lucide:check-circle" class="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
+                  <span class="text-muted-foreground">Automações e integrações</span>
+                </div>
+                <div class="flex items-start gap-2">
+                  <Icon name="lucide:check-circle" class="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
+                  <span class="text-muted-foreground">Consultoria técnica</span>
+                </div>
+                <div class="flex items-start gap-2">
+                  <Icon name="lucide:check-circle" class="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
+                  <span class="text-muted-foreground">Code review & mentoria</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="space-y-4">
+              <div class="flex items-center gap-2">
+                <Icon name="lucide:clock" class="w-5 h-5 text-orange-500" />
+                <h3 class="font-semibold">Modalidades</h3>
+              </div>
+              <div class="space-y-2.5 text-sm">
+                <div class="flex items-start gap-2">
+                  <Icon name="lucide:zap" class="w-4 h-4 text-yellow-500 mt-0.5 flex-shrink-0" />
+                  <div>
+                    <p class="font-medium text-foreground">Freelance</p>
+                    <p class="text-xs text-muted-foreground">Projetos pontuais</p>
+                  </div>
+                </div>
+                <div class="flex items-start gap-2">
+                  <Icon name="lucide:calendar" class="w-4 h-4 text-yellow-500 mt-0.5 flex-shrink-0" />
+                  <div>
+                    <p class="font-medium text-foreground">Contratos</p>
+                    <p class="text-xs text-muted-foreground">Dedicação mensal</p>
+                  </div>
+                </div>
+                <div class="flex items-start gap-2">
+                  <Icon name="lucide:users" class="w-4 h-4 text-yellow-500 mt-0.5 flex-shrink-0" />
+                  <div>
+                    <p class="font-medium text-foreground">Consultoria</p>
+                    <p class="text-xs text-muted-foreground">Por hora ou pacote</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="space-y-4">
+              <div class="flex items-center gap-2">
+                <Icon name="lucide:info" class="w-5 h-5 text-cyan-500" />
+                <h3 class="font-semibold">Informações</h3>
+              </div>
+              <div class="space-y-2.5 text-sm">
+                <div class="flex items-start gap-2">
+                  <Icon name="lucide:message-circle" class="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
+                  <div>
+                    <p class="font-medium text-foreground">Resposta em 24h</p>
+                    <p class="text-xs text-muted-foreground">Dias úteis</p>
+                  </div>
+                </div>
+                <div class="flex items-start gap-2">
+                  <Icon name="lucide:globe" class="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
+                  <div>
+                    <p class="font-medium text-foreground">Remoto</p>
+                    <p class="text-xs text-muted-foreground">Trabalho 100% remoto</p>
+                  </div>
+                </div>
+                <div class="flex items-start gap-2">
+                  <Icon name="lucide:languages" class="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
+                  <div>
+                    <p class="font-medium text-foreground">Português (BR)</p>
+                    <p class="text-xs text-muted-foreground">Fluência completa</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
     </main>
   </div>
 </template>
@@ -239,10 +320,24 @@ import { Card, CardContent, CardHeader, CardTitle } from '~/components/ui/card'
 import { Input } from '~/components/ui/input'
 import { Textarea } from '~/components/ui/textarea'
 import { Button } from '~/components/ui/button'
+import { toast } from 'vue-sonner'
 
 definePageMeta({
   layout: 'default'
 })
+
+// Buscar configurações do site
+const { data: settings } = await useFetch('/api/settings')
+
+// Links de contato com valores padrão
+const contactLinks = computed(() => ({
+  whatsapp: settings.value?.whatsapp?.value || 'https://wa.me/5511999999999',
+  email: settings.value?.email?.value || 'contato@patrickluz.dev',
+  linkedin: settings.value?.linkedin?.value || 'https://linkedin.com/in/patrickluz',
+  github: settings.value?.github?.value || 'https://github.com/patrickluz',
+  twitter: settings.value?.twitter?.value || 'https://twitter.com/patrickluz',
+  instagram: settings.value?.instagram?.value || 'https://instagram.com/patrickluz'
+}))
 
 const form = ref({
   name: '',
@@ -251,18 +346,43 @@ const form = ref({
   message: ''
 })
 
-const handleSubmit = () => {
-  console.log('Form submitted:', form.value)
+const isSubmitting = ref(false)
 
-  const message = `Olá! Meu nome é ${form.value.name}.\n\nAssunto: ${form.value.subject}\n\n${form.value.message}\n\nEmail: ${form.value.email}`
-  const whatsappUrl = `https://wa.me/5511999999999?text=${encodeURIComponent(message)}`
-  window.open(whatsappUrl, '_blank')
+const handleSubmit = async () => {
+  if (!form.value.name || !form.value.email || !form.value.message) return
 
-  form.value = {
-    name: '',
-    email: '',
-    subject: '',
-    message: ''
+  isSubmitting.value = true
+
+  try {
+    const response = await $fetch('/api/contact', {
+      method: 'POST',
+      body: {
+        name: form.value.name,
+        email: form.value.email,
+        subject: form.value.subject,
+        message: form.value.message
+      }
+    })
+
+    toast.success('🎉 Mensagem enviada com sucesso!', {
+      description: 'Retornaremos em breve. Obrigado pelo contato!',
+    })
+
+    // Limpar formulário
+    form.value = {
+      name: '',
+      email: '',
+      subject: '',
+      message: ''
+    }
+  } catch (error: any) {
+    console.error('Erro ao enviar mensagem:', error)
+
+    toast.error('Erro ao enviar mensagem', {
+      description: error.data?.statusMessage || 'Tente novamente mais tarde.',
+    })
+  } finally {
+    isSubmitting.value = false
   }
 }
 </script>

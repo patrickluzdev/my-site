@@ -54,56 +54,9 @@
 </template>
 
 <script setup lang="ts">
-const clients = ref([
-  {
-    id: 1,
-    name: 'TechStart Brasil',
-    initial: 'T',
-    color: '#FF6B6B',
-    type: 'Startup',
-    emoji: '🚀',
-    project: 'Plataforma SaaS de gestão empresarial',
-    testimonial: 'Profissional excepcional! Entregou o projeto antes do prazo e superou nossas expectativas.'
-  },
-  {
-    id: 2,
-    name: 'E-commerce Plus',
-    initial: 'E',
-    color: '#4ECDC4',
-    type: 'E-commerce',
-    emoji: '🛒',
-    project: 'Loja virtual completa com painel administrativo',
-    testimonial: 'Trabalho impecável! A performance do site melhorou 300% após a otimização.'
-  },
-  {
-    id: 3,
-    name: 'Marketing Digital Pro',
-    initial: 'M',
-    color: '#95E1D3',
-    type: 'Agência',
-    emoji: '📊',
-    project: 'Dashboard analytics com integrações de APIs',
-    testimonial: null
-  },
-  {
-    id: 4,
-    name: 'FitApp Health',
-    initial: 'F',
-    color: '#F38181',
-    type: 'App Mobile',
-    emoji: '💪',
-    project: 'Progressive Web App para treinos personalizados',
-    testimonial: 'Comunicação clara, código limpo e resultado incrível!'
-  },
-  {
-    id: 5,
-    name: 'EduTech Solutions',
-    initial: 'E',
-    color: '#AA96DA',
-    type: 'EdTech',
-    emoji: '📚',
-    project: 'Plataforma de cursos online com streaming',
-    testimonial: null
-  }
-])
+const { data: clients, error } = await useFetch('/api/clients/recent')
+
+if (error.value) {
+  console.error('Error loading clients:', error.value)
+}
 </script>

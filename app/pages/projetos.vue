@@ -1,43 +1,72 @@
 <template>
   <div>
     <main class="max-w-6xl mx-auto px-4 py-8">
-      <!-- Header -->
       <div class="mb-8">
-        <h1 class="text-4xl font-bold mb-3">Meus Projetos 🚀</h1>
+        <h1 class="text-4xl font-bold mb-3">Meus Projetos</h1>
         <p class="text-muted-foreground text-lg">
           Confira alguns dos projetos que desenvolvi, desde aplicações web até sistemas completos.
         </p>
       </div>
 
-      <div class="mb-8 flex flex-wrap gap-2">
+      <div v-if="loadingCategories" class="mb-8">
+        <div class="flex gap-2">
+          <div v-for="i in 5" :key="i" class="h-8 w-24 bg-muted animate-pulse rounded-md" />
+        </div>
+      </div>
+
+      <div v-else class="mb-8 flex flex-wrap gap-2">
         <Button
           v-for="category in categories"
-          :key="category"
-          :variant="selectedCategory === category ? 'default' : 'outline'"
+          :key="category.slug"
+          :variant="selectedCategory === category.slug ? 'default' : 'outline'"
           size="sm"
-          @click="selectedCategory = category"
+          @click="selectCategory(category.slug)"
         >
-          {{ category }}
+          {{ category.name }}
+          <span v-if="category.count > 0" class="ml-1 text-xs opacity-70">({{ category.count }})</span>
         </Button>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <ProjectCard
-          v-for="project in filteredProjects"
+          v-for="project in projects"
           :key="project.id"
           :project="project"
         />
       </div>
 
-      <!-- Mensagem se não houver projetos -->
+      <div v-if="loading" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
+        <div
+          v-for="i in 3"
+          :key="i"
+          class="h-96 bg-muted animate-pulse rounded-lg"
+        />
+      </div>
+
       <div
-        v-if="filteredProjects.length === 0"
+        v-if="!loading && projects.length === 0"
         class="text-center py-12"
       >
         <Icon name="lucide:folder-open" class="w-16 h-16 mx-auto text-muted-foreground mb-4" />
         <p class="text-muted-foreground text-lg">
           Nenhum projeto encontrado nesta categoria.
         </p>
+      </div>
+
+      <div v-if="hasNextPage && !loading" class="mt-8 text-center">
+        <Button
+          @click="loadMore"
+          :disabled="loadingMore"
+          size="lg"
+          variant="outline"
+        >
+          <Icon
+            v-if="loadingMore"
+            name="lucide:loader-2"
+            class="w-4 h-4 mr-2 animate-spin"
+          />
+          {{ loadingMore ? 'Carregando...' : 'Carregar mais projetos' }}
+        </Button>
       </div>
     </main>
   </div>
@@ -50,104 +79,133 @@ definePageMeta({
   layout: 'default'
 })
 
-const selectedCategory = ref('Todos')
+interface ProjectStats {
+  stars?: number
+  users?: string
+  performance?: string
+}
 
-const categories = [
-  'Todos',
-  'SaaS',
-  'E-commerce',
-  'Dashboard',
-  'Landing Page',
-  'Mobile'
-]
+interface Project {
+  id: string
+  title: string
+  slug: string
+  description: string
+  image?: string
+  technologies: string[]
+  category: string
+  categorySlug?: string
+  status?: string
+  featured?: boolean
+  demoUrl?: string
+  githubUrl?: string
+  link?: string
+  stats?: ProjectStats
+}
 
-const projects = ref([
-  {
-    id: 1,
-    title: 'Plataforma SaaS de Newsletter com IA',
-    description: 'Sistema completo de newsletter com geração de conteúdo por IA, análise de métricas e automação de envios. Desenvolvido com Next.js 16 e integração com OpenAI.',
-    image: 'https://placehold.co/600x400/6366f1/white?text=Newsletter+AI',
-    technologies: ['Next.js', 'TypeScript', 'OpenAI', 'Prisma', 'PostgreSQL'],
-    category: 'SaaS',
-    status: 'Concluído',
-    featured: true,
-    demoUrl: 'https://demo.example.com',
-    githubUrl: 'https://github.com/patrickluz',
-    stats: {
-      users: '500+',
-      performance: '98/100'
-    }
-  },
-  {
-    id: 2,
-    title: 'E-commerce Plus',
-    description: 'Loja virtual completa com painel administrativo, gerenciamento de estoque, processamento de pagamentos e dashboard de analytics em tempo real.',
-    image: 'https://placehold.co/600x400/8b5cf6/white?text=E-commerce',
-    technologies: ['Vue.js', 'Nuxt', 'Stripe', 'Node.js', 'MongoDB'],
-    category: 'E-commerce',
-    status: 'Concluído',
-    featured: true,
-    demoUrl: 'https://demo.example.com',
-    stats: {
-      performance: '300% faster'
-    }
-  },
-  {
-    id: 3,
-    title: 'Dashboard Analytics Pro',
-    description: 'Dashboard completo de analytics com integrações de múltiplas APIs, visualização de dados em tempo real e relatórios customizáveis.',
-    image: 'https://placehold.co/600x400/06b6d4/white?text=Analytics',
-    technologies: ['React', 'TypeScript', 'D3.js', 'Tailwind', 'Express'],
-    category: 'Dashboard',
-    status: 'Concluído',
-    demoUrl: 'https://demo.example.com',
-    githubUrl: 'https://github.com/patrickluz',
-    stats: {
-      stars: 245
-    }
-  },
-  {
-    id: 4,
-    title: 'FitApp Health - PWA',
-    description: 'Progressive Web App para treinos personalizados com tracking de exercícios, planos nutricionais e integração com wearables.',
-    image: 'https://placehold.co/600x400/ec4899/white?text=FitApp',
-    technologies: ['Vue.js', 'PWA', 'Firebase', 'Chart.js'],
-    category: 'Mobile',
-    status: 'Concluído',
-    demoUrl: 'https://demo.example.com',
-    stats: {
-      users: '1.2k+'
-    }
-  },
-  {
-    id: 5,
-    title: 'EduTech Streaming Platform',
-    description: 'Plataforma de cursos online com sistema de streaming, progresso de alunos, certificados e gamificação.',
-    image: 'https://placehold.co/600x400/f59e0b/white?text=EduTech',
-    technologies: ['Nuxt', 'Vue.js', 'AWS', 'WebRTC', 'Redis'],
-    category: 'SaaS',
-    status: 'Em desenvolvimento',
-    githubUrl: 'https://github.com/patrickluz'
-  },
-  {
-    id: 6,
-    title: 'Landing Page Moderna',
-    description: 'Landing page de alta conversão com animações fluidas, otimização SEO e integração com ferramentas de marketing.',
-    image: 'https://placehold.co/600x400/10b981/white?text=Landing',
-    technologies: ['Astro', 'Tailwind', 'GSAP', 'TypeScript'],
-    category: 'Landing Page',
-    status: 'Concluído',
-    demoUrl: 'https://demo.example.com',
-    stats: {
-      performance: '100/100'
-    }
+interface PaginationInfo {
+  nextCursor: string | null
+  hasNextPage: boolean
+}
+
+interface Category {
+  id: number
+  name: string
+  slug: string
+  description?: string
+  icon?: string
+  count: number
+}
+
+const selectedCategory = ref('todos')
+const projects = ref<Project[]>([])
+const nextCursor = ref<string | null>(null)
+const hasNextPage = ref(false)
+const loading = ref(true)
+const loadingMore = ref(false)
+const loadingCategories = ref(true)
+const categories = ref<Category[]>([])
+
+const loadCategories = async () => {
+  try {
+    loadingCategories.value = true
+    const data = await $fetch<Category[]>('/api/projects/categories')
+    categories.value = data
+  } catch (error) {
+    console.error('Error loading categories:', error)
+  } finally {
+    loadingCategories.value = false
   }
-])
+}
 
-const filteredProjects = computed(() => {
-  if (selectedCategory.value === 'Todos') {
-    return projects.value
+const loadProjects = async (cursor?: string) => {
+  try {
+    const params: Record<string, any> = {
+      limit: 12,
+    }
+
+    if (cursor) {
+      params.cursor = cursor
+    }
+
+    if (selectedCategory.value !== 'todos') {
+      params.category = selectedCategory.value
+    }
+
+    const response = await $fetch<{
+      data: Project[]
+      pagination: PaginationInfo
+    }>('/api/projects', {
+      params,
+    })
+
+    return response
+  } catch (error) {
+    console.error('Error loading projects:', error)
+    throw error
   }
-  return projects.value.filter(project => project.category === selectedCategory.value)
+}
+
+const loadInitial = async () => {
+  try {
+    loading.value = true
+    const response = await loadProjects()
+    projects.value = response.data
+    nextCursor.value = response.pagination.nextCursor
+    hasNextPage.value = response.pagination.hasNextPage
+  } catch (error) {
+    console.error('Error loading initial projects:', error)
+  } finally {
+    loading.value = false
+  }
+}
+
+const loadMore = async () => {
+  if (!nextCursor.value || loadingMore.value) return
+
+  try {
+    loadingMore.value = true
+    const response = await loadProjects(nextCursor.value)
+    projects.value = [...projects.value, ...response.data]
+    nextCursor.value = response.pagination.nextCursor
+    hasNextPage.value = response.pagination.hasNextPage
+  } catch (error) {
+    console.error('Error loading more projects:', error)
+  } finally {
+    loadingMore.value = false
+  }
+}
+
+const selectCategory = async (slug: string) => {
+  if (selectedCategory.value === slug) return
+
+  selectedCategory.value = slug
+  await loadInitial()
+}
+
+onMounted(async () => {
+  await Promise.all([
+    loadCategories(),
+    loadInitial()
+  ])
 })
 </script>

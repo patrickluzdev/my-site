@@ -5,7 +5,7 @@
                 <div class="flex items-center justify-between h-16">
                     <HeaderProfile />
                     <HeaderDesktopNav />
-                    <HeaderActions />
+                    <!-- <HeaderActions /> -->
                 </div>
             </div>
         </header>
@@ -17,6 +17,6 @@
 <script setup lang="ts">
 import HeaderProfile from './components/HeaderProfile.vue'
 import HeaderDesktopNav from './components/HeaderDesktopNav.vue'
-import HeaderActions from './components/HeaderActions.vue'
+// import HeaderActions from './components/HeaderActions.vue'
 import HeaderMobileTabs from './components/HeaderMobileTabs.vue'
 </script>

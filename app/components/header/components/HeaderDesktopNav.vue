@@ -16,8 +16,10 @@ const route = useRoute()
 
 const navigation = [
     { path: '/', label: 'Início' },
+    { path: '/sobre', label: 'Sobre' },
     { path: '/projetos', label: 'Projetos' },
-    { path: '/posts', label: 'Posts' }
+    { path: '/posts', label: 'Posts' },
+    { path: '/contato', label: 'Contato' }
 ]
 
 const getLinkClasses = (path: string) => {

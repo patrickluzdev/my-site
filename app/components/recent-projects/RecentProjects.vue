@@ -1,80 +1,10 @@
 <template>
   <Card>
     <CardHeader>
-      <CardTitle class="text-2xl">Sobre Patrick Luz 👨‍💻</CardTitle>
-      <CardDescription>
-        Desenvolvedor Full Stack especializado em criar soluções web modernas e escaláveis 🚀
-      </CardDescription>
+      <CardTitle class="text-2xl">Clientes & Projetos Recentes 🎯</CardTitle>
     </CardHeader>
 
-    <CardContent class="space-y-5">
-      <div>
-        <h3 class="text-xl font-semibold mb-3 flex items-center gap-2">
-          Transformando ideias em produtos digitais 💡
-        </h3>
-        <p class="text-muted-foreground leading-relaxed">
-          Com anos de experiência em desenvolvimento web, ajudo empresas e empreendedores
-          a construir aplicações robustas, responsivas e de alta performance. Especializado
-          em tecnologias modernas como React, Vue.js, Node.js e Nuxt 🎯.
-        </p>
-      </div>
-
-      <div class="flex flex-wrap gap-2">
-        <Badge variant="secondary" class="px-3 py-1.5 text-xs">
-          💻 Full Stack Development
-        </Badge>
-        <Badge variant="secondary" class="px-3 py-1.5 text-xs">
-          ⚡ Performance & SEO
-        </Badge>
-        <Badge variant="secondary" class="px-3 py-1.5 text-xs">
-          🎨 UI/UX Design
-        </Badge>
-        <Badge variant="secondary" class="px-3 py-1.5 text-xs">
-          📱 Responsive Web
-        </Badge>
-        <Badge variant="secondary" class="px-3 py-1.5 text-xs">
-          🔧 APIs & Integrações
-        </Badge>
-      </div>
-
-      <p class="text-muted-foreground font-medium">
-        Vamos trabalhar juntos no seu próximo projeto? 💼
-      </p>
-
-      <div class="flex items-center gap-3 pt-2">
-        <Button
-          as-child
-          variant="secondary"
-          size="sm"
-        >
-          <a
-            href="https://twitter.com"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Icon name="lucide:twitter" class="w-4 h-4 mr-2" />
-            Twitter
-          </a>
-        </Button>
-        <Button
-          as-child
-          variant="secondary"
-          size="sm"
-        >
-          <a
-            href="https://github.com"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Icon name="lucide:github" class="w-4 h-4 mr-2" />
-            GitHub
-          </a>
-        </Button>
-      </div>
-
-    <Separator class="my-8" />
-
-    <h2 class="text-2xl font-bold mb-6">Clientes & Projetos Recentes 🎯</h2>
+    <CardContent class="space-y-4">
 
     <div class="space-y-4">
       <div

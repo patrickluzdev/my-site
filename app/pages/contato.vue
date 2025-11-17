@@ -183,6 +183,21 @@
                 </div>
                 <Icon name="lucide:external-link" class="w-4 h-4 text-muted-foreground group-hover:text-foreground" />
               </a>
+
+              <a
+                href="https://instagram.com/patrickluz"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="flex items-center gap-3 px-4 py-3 bg-muted hover:bg-muted/80 rounded-xl transition-colors group"
+              >
+                <div class="w-10 h-10 rounded-full bg-gradient-to-br from-purple-500 via-pink-500 to-orange-500 flex items-center justify-center flex-shrink-0">
+                  <Icon name="mdi:instagram" class="text-white" :size="20"/>
+                </div>
+                <div class="flex-1 min-w-0">
+                  <p class="font-semibold text-sm">Instagram</p>
+                </div>
+                <Icon name="lucide:external-link" class="w-4 h-4 text-muted-foreground group-hover:text-foreground" />
+              </a>
             </CardContent>
           </Card>
 
@@ -194,6 +209,10 @@
               <div class="flex items-start gap-2">
                 <Icon name="lucide:check-circle" class="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
                 <span>Projetos de desenvolvimento web</span>
+              </div>
+              <div class="flex items-start gap-2">
+                <Icon name="lucide:check-circle" class="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
+                <span>Automações e integrações</span>
               </div>
               <div class="flex items-start gap-2">
                 <Icon name="lucide:check-circle" class="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />

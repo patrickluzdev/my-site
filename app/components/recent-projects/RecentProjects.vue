@@ -34,14 +34,9 @@
 
           <div
             v-if="client.testimonial"
-            class="flex items-start gap-2 mt-2 bg-muted rounded-lg p-3"
+            class="mt-2 bg-muted rounded-lg p-3 border-primary"
           >
-            <Avatar class="w-6 h-6">
-              <AvatarFallback class="bg-primary text-primary-foreground text-xs">
-                ⭐
-              </AvatarFallback>
-            </Avatar>
-            <p class="text-sm text-foreground flex-1 italic">
+            <p class="text-sm text-foreground italic">
               "{{ client.testimonial }}"
             </p>
           </div>
@@ -53,12 +48,7 @@
       </div>
     </div>
 
-    <button
-      class="w-full mt-6 py-3 text-sm font-medium text-foreground hover:bg-muted transition-colors border border-border rounded-xl"
-    >
-      Ver todos os projetos
-      <Icon name="lucide:chevron-down" class="w-4 h-4 inline-block ml-1" />
-    </button>
+    <ViewAllButton to="/projetos" label="Ver todos os projetos" />
     </CardContent>
   </Card>
 </template>

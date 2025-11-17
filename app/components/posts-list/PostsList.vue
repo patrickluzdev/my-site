@@ -1,7 +1,7 @@
 <template>
   <Card>
     <CardHeader>
-      <CardTitle class="text-2xl">Posts</CardTitle>
+      <CardTitle class="text-2xl">Posts Recentes 📝</CardTitle>
     </CardHeader>
 
     <CardContent class="space-y-4">
@@ -10,6 +10,8 @@
         :key="post.id"
         :post="post"
       />
+
+      <ViewAllButton to="/posts" label="Ver todos os posts" />
     </CardContent>
   </Card>
 </template>

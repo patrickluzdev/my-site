@@ -25,7 +25,7 @@ const profile = {
     avatar: {
         src: '/logo.jpeg',
         fallback: 'PL',
-        class: 'w-10 h-10 md:w-12 md:h-12 rounded-lg'
+        class: 'w-8 h-8 md:w-10 md:h-10 rounded-lg'
     }
 }
 </script>

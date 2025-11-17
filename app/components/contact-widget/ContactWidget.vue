@@ -1,5 +1,5 @@
 <template>
-  <Card class="sticky top-20">
+  <Card>
     <CardHeader>
       <CardTitle class="text-2xl">Vamos trabalhar juntos? 🚀</CardTitle>
       <div class="space-y-2 mt-3">

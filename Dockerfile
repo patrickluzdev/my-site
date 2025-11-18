@@ -3,7 +3,7 @@
 # ========================================
 # Stage 1: Base com dependências
 # ========================================
-FROM node:22-alpine AS base
+FROM node:22.20.0-alpine AS base
 
 # Instalar dependências necessárias para Prisma e build
 RUN apk add --no-cache libc6-compat openssl

@@ -326,17 +326,17 @@ definePageMeta({
   layout: 'default'
 })
 
-// Buscar configurações do site
-const { data: settings } = await useFetch('/api/settings')
+// Usar composable de site settings
+const { getSetting } = useSiteSettings()
 
-// Links de contato com valores padrão
+// Links de contato
 const contactLinks = computed(() => ({
-  whatsapp: settings.value?.whatsapp?.value || 'https://wa.me/5511999999999',
-  email: settings.value?.email?.value || 'contato@patrickluz.dev',
-  linkedin: settings.value?.linkedin?.value || 'https://linkedin.com/in/patrickluz',
-  github: settings.value?.github?.value || 'https://github.com/patrickluz',
-  twitter: settings.value?.twitter?.value || 'https://twitter.com/patrickluz',
-  instagram: settings.value?.instagram?.value || 'https://instagram.com/patrickluz'
+  whatsapp: getSetting('whatsapp'),
+  email: getSetting('email'),
+  linkedin: getSetting('linkedin'),
+  github: getSetting('github'),
+  twitter: getSetting('twitter'),
+  instagram: getSetting('instagram')
 }))
 
 const form = ref({

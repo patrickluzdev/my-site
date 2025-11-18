@@ -123,7 +123,8 @@ import { toast } from 'vue-sonner'
 
 const iconSize = 24
 
-const { data: settings } = await useFetch('/api/settings')
+// Usar composable de site settings
+const { getSetting } = useSiteSettings()
 
 const form = ref({
   name: '',
@@ -133,10 +134,10 @@ const form = ref({
 
 const isSubmitting = ref(false)
 
-const whatsappNumber = computed(() => settings.value?.whatsapp_number?.value || '5511999999999')
-const contactEmail = computed(() => settings.value?.contact_email?.value || 'contato@example.com')
-const linkedinUrl = computed(() => settings.value?.linkedin_url?.value || 'https://linkedin.com/in/patrickluz')
-const githubUrl = computed(() => settings.value?.github_url?.value || 'https://github.com/patrickluz')
+const whatsappNumber = computed(() => getSetting('whatsapp_number'))
+const contactEmail = computed(() => getSetting('contact_email'))
+const linkedinUrl = computed(() => getSetting('linkedin_url'))
+const githubUrl = computed(() => getSetting('github_url'))
 
 const handleSubmit = async () => {
   if (!form.value.name || !form.value.email || !form.value.message) return

@@ -35,14 +35,14 @@ export const servicesDetailed: Service[] = [
 ];
 
 export const metricsHome: Metric[] = [
-  { value: "+5", label: "Anos de exp." },
+  { value: "+6", label: "Anos de exp." },
   { value: "6", label: "Empresas" },
   { value: "24h", label: "Tempo de resposta" },
   { value: "+100M", label: "Usuários" },
 ];
 
 export const metricsAbout: Metric[] = [
-  { value: "+5", label: "Anos de exp." },
+  { value: "+6", label: "Anos de exp." },
   { value: "6", label: "Empresas" },
   { value: "24h", label: "Tempo de resposta" },
   { value: "+100M", label: "Usuários" },
@@ -52,7 +52,7 @@ export const faqs: FAQ[] = [
   {
     question: "Quanto custa um projeto?",
     answer:
-      "O valor depende da complexidade e escopo do projeto. Após entender suas necessidades, envio uma proposta detalhada com valores e prazos. Projetos simples começam a partir de R$ 3.000.",
+      "O valor depende da complexidade e escopo do projeto. Após entender suas necessidades, envio uma proposta detalhada com valores e prazos.",
   },
   {
     question: "Qual o prazo de entrega?",

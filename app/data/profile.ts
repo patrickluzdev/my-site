@@ -1,4 +1,4 @@
-import type { Experience, Education, SkillCategory, Testimonial } from "./types";
+import type { Education, Experience, SkillCategory, Testimonial } from "./types";
 
 export const experiences: Experience[] = [
   {
@@ -75,6 +75,7 @@ export const skillCategories: SkillCategory[] = [
       { name: "Go", icon: "logos:go" },
       { name: "Java", icon: "logos:java" },
       { name: "Node.js", icon: "logos:nodejs-icon" },
+      { name: "Python", icon: "logos:python" },
       { name: "PHP", icon: "logos:php" },
     ],
   },
@@ -82,17 +83,18 @@ export const skillCategories: SkillCategory[] = [
     name: "Frontend",
     skills: [
       { name: "React", icon: "logos:react" },
+      { name: "Next.js", icon: "logos:nextjs-icon" },
       { name: "Vue.js", icon: "logos:vue" },
-      { name: "JavaScript", icon: "logos:javascript" },
-      { name: "HTML5", icon: "logos:html-5" },
-      { name: "CSS3", icon: "logos:css-3" },
-      { name: "Sass", icon: "logos:sass" },
+      { name: "Nuxt", icon: "logos:nuxt-icon" },
+      { name: "TypeScript", icon: "logos:typescript-icon" },
+      { name: "Tailwind", icon: "logos:tailwindcss-icon" },
     ],
   },
   {
     name: "Banco de Dados",
     skills: [
       { name: "PostgreSQL", icon: "logos:postgresql" },
+      { name: "MongoDB", icon: "logos:mongodb-icon" },
       { name: "DynamoDB", icon: "logos:aws-dynamodb" },
       { name: "Elasticsearch", icon: "logos:elasticsearch" },
     ],
@@ -105,26 +107,30 @@ export const skillCategories: SkillCategory[] = [
       { name: "Docker", icon: "logos:docker-icon" },
       { name: "Kubernetes", icon: "logos:kubernetes" },
       { name: "Terraform", icon: "logos:terraform-icon" },
-      { name: "Jenkins", icon: "logos:jenkins" },
+      { name: "Prometheus", icon: "logos:prometheus" },
       { name: "Grafana", icon: "logos:grafana" },
-      { name: "Datadog", icon: "logos:datadog" },
       { name: "Git", icon: "logos:git-icon" },
+    ],
+  },
+  {
+    name: "Ferramentas",
+    skills: [
+      { name: "Figma", icon: "logos:figma" },
+      { name: "n8n", icon: "simple-icons:n8n" },
       { name: "Linux", icon: "logos:linux-tux" },
+      { name: "Datadog", icon: "logos:datadog" },
+      { name: "Jenkins", icon: "logos:jenkins" },
     ],
   },
 ];
 
 export const testimonials: Testimonial[] = [
   {
-    name: "João Silva",
-    initials: "JS",
-    role: "Tech Lead @ Hurst Capital",
-    text: "Patrick é um desenvolvedor excepcional. Entrega código de alta qualidade e sempre busca as melhores soluções para os problemas.",
-  },
-  {
-    name: "Maria Santos",
-    initials: "MS",
-    role: "Product Manager @ Inter",
-    text: "Trabalhar com o Patrick foi ótimo. Muito proativo, entende o negócio e traduz requisitos em soluções técnicas eficientes.",
+    name: "Ângelo Kusmann Cavalet",
+    initials: "AK",
+    role: "Tech Lead @ IXCSoft",
+    text: "Patrick é uma pessoa carismática, a comunicação com ele acontece de forma descontraída mas também produtiva. Resolve de forma ágil e competente os problemas designados, buscando sempre as melhores soluções. Gosta de um código bem escrito e estruturado, e encara o desconhecido como oportunidade de aprender.",
+    image: "https://media.licdn.com/dms/image/v2/D4D03AQH1pjyWVjQm2A/profile-displayphoto-shrink_100_100/profile-displayphoto-shrink_100_100/0/1673991544727?e=1765411200&v=beta&t=_mi28hBz5IEvFbgEk797m0n3Jt5QjUigoRRxdskU288",
+    link: "https://www.linkedin.com/in/angelocavallet",
   },
 ];

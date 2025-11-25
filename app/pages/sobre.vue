@@ -94,9 +94,9 @@
               <Tooltip v-for="skill in category.skills" :key="skill.name">
                 <TooltipTrigger as-child>
                   <div
-                    class="w-10 h-10 rounded-lg border border-stone-100 bg-stone-50/50 flex items-center justify-center hover:border-stone-200 transition-colors cursor-default"
+                    class="w-12 h-12 rounded-lg border border-stone-100 bg-stone-50/50 flex items-center justify-center hover:border-stone-200 transition-colors cursor-default"
                   >
-                    <Icon :name="skill.icon" class="w-5 h-5" />
+                    <Icon :name="skill.icon" class="w-6 h-6" />
                   </div>
                 </TooltipTrigger>
                 <TooltipContent>
@@ -141,7 +141,7 @@
             <h3 class="font-medium text-stone-800 text-[15px]">
               {{ exp.title }}
             </h3>
-            <p class="text-xs text-stone-400 mb-2">{{ exp.period }}</p>
+            <p class="text-xs text-stone-400 mb-2">{{ exp.period }} · {{ calculateDuration(exp.period) }}</p>
             <p class="text-stone-600 text-sm leading-relaxed">
               {{ exp.description }}
             </p>
@@ -168,14 +168,29 @@
           </p>
           <div class="flex items-center gap-3">
             <div
-              class="w-9 h-9 rounded-full bg-stone-100 flex items-center justify-center"
+              class="w-9 h-9 rounded-full bg-stone-100 flex items-center justify-center overflow-hidden"
             >
-              <span class="text-sm font-medium text-stone-600">{{
+              <img
+                v-if="testimonial.image"
+                :src="testimonial.image"
+                :alt="testimonial.name"
+                class="w-full h-full object-cover"
+              />
+              <span v-else class="text-sm font-medium text-stone-600">{{
                 testimonial.initials
               }}</span>
             </div>
             <div>
-              <p class="text-sm font-medium text-stone-800">
+              <a
+                v-if="testimonial.link"
+                :href="testimonial.link"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="text-sm font-medium text-stone-800 hover:text-stone-600 hover:underline"
+              >
+                {{ testimonial.name }}
+              </a>
+              <p v-else class="text-sm font-medium text-stone-800">
                 {{ testimonial.name }}
               </p>
               <p class="text-xs text-stone-400">{{ testimonial.role }}</p>
@@ -241,22 +256,12 @@
         Estou disponível para projetos freelance, consultoria ou parcerias.
         Conte-me sobre sua ideia.
       </p>
-      <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
-        <NuxtLink
-          to="/contato"
-          class="px-5 py-2.5 bg-stone-800 text-white text-sm font-medium rounded-lg hover:bg-stone-900 transition-colors"
-        >
-          Entrar em contato
-        </NuxtLink>
-        <a
-          href="/cv-patrick-luz.pdf"
-          download
-          class="px-5 py-2.5 border border-stone-200 text-stone-700 text-sm font-medium rounded-lg hover:bg-stone-50 transition-colors flex items-center gap-2"
-        >
-          <Icon name="lucide:download" class="w-4 h-4" />
-          Download CV
-        </a>
-      </div>
+      <NuxtLink
+        to="/contato"
+        class="inline-flex px-5 py-2.5 bg-stone-800 text-white text-sm font-medium rounded-lg hover:bg-stone-900 transition-colors"
+      >
+        Entrar em contato
+      </NuxtLink>
     </section>
   </div>
 </template>
@@ -285,5 +290,5 @@ useSeoMeta({
 });
 
 const { metricsAbout: metrics, servicesDetailed: services } = useContent();
-const { experiences, education, skillCategories, testimonials } = useProfile();
+const { experiences, education, skillCategories, testimonials, calculateDuration } = useProfile();
 </script>

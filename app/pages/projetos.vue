@@ -2,9 +2,7 @@
   <div>
     <!-- Header Section -->
     <header class="mb-6">
-      <h1 class="text-2xl font-semibold text-stone-900 mb-1">
-        Meus projetos
-      </h1>
+      <h1 class="text-2xl font-semibold text-stone-900 mb-1">Meus projetos</h1>
       <p class="text-stone-500 italic text-[15px]">
         Gosto de construir projetos incríveis
       </p>
@@ -36,15 +34,15 @@
       <div class="flex flex-wrap gap-2">
         <!-- Type Filters -->
         <button
-          v-for="type in projectTypes"
+          v-for="type in availableTypes"
           :key="type.value"
-          @click="toggleTypeFilter(type.value)"
           class="px-3 py-1 text-xs rounded-full border transition-colors"
           :class="
             selectedTypes.includes(type.value)
               ? 'bg-stone-800 text-white border-stone-800'
               : 'bg-white text-stone-600 border-stone-200 hover:border-stone-400'
           "
+          @click="toggleTypeFilter(type.value)"
         >
           {{ type.label }}
         </button>
@@ -55,13 +53,13 @@
         <button
           v-for="tech in availableTechs"
           :key="tech"
-          @click="toggleTechFilter(tech)"
           class="px-3 py-1 text-xs rounded-full border transition-colors"
           :class="
             selectedTechs.includes(tech)
               ? 'bg-stone-800 text-white border-stone-800'
               : 'bg-white text-stone-600 border-stone-200 hover:border-stone-400'
           "
+          @click="toggleTechFilter(tech)"
         >
           {{ tech }}
         </button>
@@ -69,8 +67,8 @@
         <!-- Clear Filters -->
         <button
           v-if="hasActiveFilters"
-          @click="clearFilters"
           class="px-3 py-1 text-xs text-stone-400 hover:text-stone-600 transition-colors"
+          @click="clearFilters"
         >
           Limpar filtros
         </button>
@@ -178,8 +176,8 @@
       <Icon name="lucide:search-x" class="w-10 h-10 mx-auto mb-3 opacity-50" />
       <p class="text-sm">Nenhum projeto encontrado com esses filtros.</p>
       <button
-        @click="clearFilters"
         class="mt-2 text-sm text-stone-600 underline underline-offset-2"
+        @click="clearFilters"
       >
         Limpar filtros
       </button>
@@ -204,7 +202,7 @@ useSeoMeta({
 });
 
 const {
-  projectTypes,
+  availableTypes,
   availableTechs,
   searchQuery,
   selectedTypes,

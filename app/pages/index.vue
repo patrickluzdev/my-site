@@ -138,7 +138,7 @@
     <div class="h-px bg-stone-100 my-10" />
 
     <!-- Recent Work Section -->
-    <section class="mb-10">
+    <section v-if="featuredProjects.length > 0" class="mb-10">
       <div class="flex items-center justify-between mb-4">
         <h2 class="text-lg font-semibold text-stone-900">
           Projetos em destaque

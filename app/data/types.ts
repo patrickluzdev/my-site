@@ -50,6 +50,8 @@ export interface Testimonial {
   initials: string;
   role: string;
   text: string;
+  image?: string;
+  link?: string;
 }
 
 export interface Service {

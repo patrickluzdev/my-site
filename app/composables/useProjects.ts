@@ -6,6 +6,11 @@ export const useProjects = () => {
   const selectedTypes = ref<ProjectType[]>([]);
   const selectedTechs = ref<string[]>([]);
 
+  const availableTypes = computed(() => {
+    const types = new Set(projects.map((p) => p.type));
+    return projectTypes.filter((t) => types.has(t.value));
+  });
+
   const availableTechs = computed(() => {
     const techs = new Set<string>();
     projects.forEach((p) => p.stack.forEach((t) => techs.add(t)));
@@ -90,7 +95,7 @@ export const useProjects = () => {
 
   return {
     projects,
-    projectTypes,
+    availableTypes,
     availableTechs,
     searchQuery,
     selectedTypes,

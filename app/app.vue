@@ -23,7 +23,7 @@ useHead({
   ],
   link: [
     { rel: "canonical", href: "https://patrickluz.dev" },
-    { rel: "preload", as: "image", href: "/logo.jpeg" },
+    { rel: "preload", as: "image", href: "/logo.webp" },
   ],
 });
 </script>

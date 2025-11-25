@@ -8,7 +8,7 @@ export default defineNuxtConfig({
   ssr: true,
 
   app: {
-    baseURL: '/my-site/',
+    baseURL: '/',
   },
 
   nitro: {

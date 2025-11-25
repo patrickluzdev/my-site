@@ -273,7 +273,6 @@ const featuredProjects = [
     category: "featured" as const,
     links: {
       demo: "https://exemplo.com",
-      caseStudy: "/blog/ecommerce-case",
     },
   },
 ];

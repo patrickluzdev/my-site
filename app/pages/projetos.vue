@@ -262,7 +262,6 @@ const projects = ref<Project[]>([
     category: "featured",
     links: {
       demo: "https://exemplo.com",
-      caseStudy: "/blog/ecommerce-case",
     },
   },
   // Personal
@@ -321,9 +320,7 @@ const projects = ref<Project[]>([
     year: 2023,
     type: "mobile",
     category: "client",
-    links: {
-      caseStudy: "/blog/delivery-case",
-    },
+    links: {},
   },
   {
     id: "7",

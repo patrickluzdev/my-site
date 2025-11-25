@@ -79,11 +79,11 @@
               class="w-full px-4 py-2.5 pr-10 text-sm border border-stone-200 rounded-lg focus:outline-none focus:border-stone-400 transition-colors bg-white appearance-none cursor-pointer"
             >
               <option value="" disabled>Selecione um assunto</option>
-              <option value="projeto">Novo projeto</option>
-              <option value="freelance">Trabalho freelance</option>
-              <option value="consultoria">Consultoria</option>
-              <option value="duvida">Dúvida</option>
-              <option value="outro">Outro</option>
+              <option value="Novo projeto">Novo projeto</option>
+              <option value="Trabalho freelance">Trabalho freelance</option>
+              <option value="Consultoria">Consultoria</option>
+              <option value="Dúvida">Dúvida</option>
+              <option value="Outro">Outro</option>
             </select>
             <Icon
               name="lucide:chevron-down"
@@ -103,7 +103,7 @@
             placeholder="Conte um pouco sobre seu projeto ou dúvida..."
             required
             class="w-full px-4 py-2.5 text-sm border border-stone-200 rounded-lg focus:outline-none focus:border-stone-400 transition-colors resize-none"
-          ></textarea>
+          />
         </div>
 
         <button
@@ -126,6 +126,17 @@
       >
         <p class="text-sm text-green-700">
           Mensagem enviada com sucesso! Retornarei em breve.
+        </p>
+      </div>
+
+      <!-- Error Message -->
+      <div
+        v-if="submitError"
+        class="mt-4 p-4 rounded-xl bg-red-50 border border-red-100"
+      >
+        <p class="text-sm text-red-700">
+          Erro ao enviar mensagem. Tente novamente ou entre em contato pelo
+          WhatsApp.
         </p>
       </div>
     </section>
@@ -217,8 +228,8 @@
           class="rounded-xl border border-stone-100 overflow-hidden"
         >
           <button
-            @click="toggleFaq(index)"
             class="w-full flex items-center justify-between p-4 text-left hover:bg-stone-50 transition-colors"
+            @click="toggleFaq(index)"
           >
             <span class="text-sm font-medium text-stone-800">{{
               faq.question
@@ -308,6 +319,7 @@ const {
   form,
   isSubmitting,
   submitSuccess,
+  submitError,
   handleSubmit,
 } = useContact();
 </script>

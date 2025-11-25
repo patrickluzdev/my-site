@@ -33,12 +33,27 @@ export default defineNuxtConfig({
     '@nuxt/image',
     'shadcn-nuxt',
     '@vueuse/nuxt',
-    '@nuxtjs/sitemap',
+    '@nuxtjs/seo',
   ],
 
-  // Sitemap configuration
+  // SEO configuration
   site: {
     url: 'https://patrickluz.dev',
+    name: 'Patrick Luz',
+    description: 'Engenheiro de Software especializado em aplicações web, APIs e automações.',
+    defaultLocale: 'pt-BR',
+  },
+
+  seo: {
+    meta: {
+      twitterCard: 'summary_large_image',
+    },
+  },
+
+  ogImage: {
+    defaults: {
+      component: 'OgImageTemplate',
+    },
   },
 
   sitemap: {

@@ -287,11 +287,14 @@ useSeoMeta({
   title: "Contato - Patrick Luz",
   description:
     "Entre em contato para discutir seu projeto. Disponível para desenvolvimento web, APIs, automações e consultoria. Resposta em até 24h.",
-  ogTitle: "Contato - Patrick Luz",
-  ogDescription:
-    "Entre em contato para discutir seu projeto. Disponível para novos projetos.",
-  ogType: "website",
-  twitterCard: "summary_large_image",
+});
+
+defineOgImage({
+  component: "OgImageTemplate",
+  props: {
+    title: "Entre em Contato",
+    description: "Disponível para novos projetos. Resposta em até 24h.",
+  },
 });
 
 const {

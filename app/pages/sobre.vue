@@ -28,7 +28,7 @@
     <!-- About Text -->
     <div class="mb-10">
       <p class="text-stone-600 leading-relaxed mb-4 text-[15px]">
-        Sou Patrick Luz, engenheiro de software com +5 anos de experiência em
+        Sou Patrick Luz, engenheiro de software com +6 anos de experiência em
         empresas como Mercado Livre, Inter e Hurst Capital. Transformo ideias em
         produtos digitais escaláveis e de alta qualidade.
       </p>
@@ -296,12 +296,16 @@ definePageMeta({
 useSeoMeta({
   title: "Sobre mim - Patrick Luz",
   description:
-    "Engenheiro de Software com +5 anos de experiência. Especialista em desenvolvimento web, APIs, automações e DevOps. Disponível para novos projetos.",
-  ogTitle: "Sobre mim - Patrick Luz",
-  ogDescription:
-    "Engenheiro de Software com +5 anos de experiência em empresas como Mercado Livre, Inter e Hurst Capital.",
+    "Engenheiro de Software com +6 anos de experiência. Especialista em desenvolvimento web, APIs, automações e DevOps. Disponível para novos projetos.",
   ogType: "profile",
-  twitterCard: "summary_large_image",
+});
+
+defineOgImage({
+  component: "OgImageTemplate",
+  props: {
+    title: "Sobre Mim",
+    description: "Engenheiro de Software com +6 anos de experiência.",
+  },
 });
 
 const { metricsAbout: metrics, serviceCategories } = useContent();

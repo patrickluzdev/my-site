@@ -93,14 +93,13 @@
         Seu projeto aqui?
       </h3>
       <p class="text-sm text-stone-400 mb-4 leading-relaxed">
-        Precisa de um desenvolvedor full-stack? Estou aberto a trabalhar em
-        novos projetos legais.
+        Precisa de um desenvolvedor? Estou aberto a trabalhar em novos projetos.
       </p>
       <NuxtLink
         to="/contato"
         class="text-sm text-stone-600 underline underline-offset-2 decoration-stone-300 hover:decoration-stone-500 hover:text-stone-800"
       >
-        Me contrate
+        Vamos conversar
       </NuxtLink>
     </div>
 
@@ -194,11 +193,14 @@ useSeoMeta({
   title: "Projetos - Patrick Luz",
   description:
     "Portfólio de projetos desenvolvidos: sistemas web, APIs, automações e mais. Veja exemplos de trabalhos em Vue.js, React, Go, Node.js e outras tecnologias.",
-  ogTitle: "Projetos - Patrick Luz",
-  ogDescription:
-    "Portfólio de projetos desenvolvidos: sistemas web, APIs, automações e mais.",
-  ogType: "website",
-  twitterCard: "summary_large_image",
+});
+
+defineOgImage({
+  component: "OgImageTemplate",
+  props: {
+    title: "Meus Projetos",
+    description: "Portfólio de projetos: sistemas web, APIs, automações e mais.",
+  },
 });
 
 const {

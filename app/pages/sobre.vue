@@ -25,33 +25,22 @@
       </p>
     </div>
 
-    <!-- About Text with Image -->
-    <div class="flex gap-8 mb-10">
-      <div class="flex-1">
-        <p class="text-stone-600 leading-relaxed mb-4 text-[15px]">
-          Sou Patrick Luz, engenheiro de software com +5 anos de experiência em
-          empresas como Mercado Livre, Inter e Hurst Capital. Transformo ideias
-          em produtos digitais escaláveis e de alta qualidade.
-        </p>
-        <p class="text-stone-600 leading-relaxed text-[15px]">
-          Trabalho com todo o ciclo de desenvolvimento — do planejamento à
-          entrega. Se você precisa de um parceiro técnico para seu projeto,
-          <NuxtLink
-            to="/contato"
-            class="text-stone-800 underline underline-offset-2 decoration-stone-300 hover:decoration-stone-500"
-            >vamos conversar</NuxtLink
-          >.
-        </p>
-      </div>
-      <div class="hidden md:block shrink-0">
-        <div class="w-28 h-28 rounded-xl overflow-hidden">
-          <img
-            src="/logo.jpeg"
-            alt="Patrick Luz"
-            class="w-full h-full object-cover"
-          />
-        </div>
-      </div>
+    <!-- About Text -->
+    <div class="mb-10">
+      <p class="text-stone-600 leading-relaxed mb-4 text-[15px]">
+        Sou Patrick Luz, engenheiro de software com +5 anos de experiência em
+        empresas como Mercado Livre, Inter e Hurst Capital. Transformo ideias
+        em produtos digitais escaláveis e de alta qualidade.
+      </p>
+      <p class="text-stone-600 leading-relaxed text-[15px]">
+        Trabalho com todo o ciclo de desenvolvimento — do planejamento à
+        entrega. Se você precisa de um parceiro técnico para seu projeto,
+        <NuxtLink
+          to="/contato"
+          class="text-stone-800 underline underline-offset-2 decoration-stone-300 hover:decoration-stone-500"
+          >vamos conversar</NuxtLink
+        >.
+      </p>
     </div>
 
     <!-- Metrics -->

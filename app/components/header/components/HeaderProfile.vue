@@ -1,16 +1,16 @@
 <template>
-    <div class="flex items-center gap-2 md:gap-3">
-        <NuxtLink to="/">
-            <AppLogo size="sm" class="md:w-10 md:h-10" />
-        </NuxtLink>
-        <div class="flex flex-col">
-            <span class="font-semibold text-sm">{{ profile.name }}</span>
-        </div>
+  <div class="flex items-center gap-2 md:gap-3">
+    <NuxtLink to="/">
+      <div class="w-8 h-8 md:w-10 md:h-10 rounded-full overflow-hidden ring-1 ring-stone-200">
+        <img
+          src="/logo.jpeg"
+          alt="Patrick Luz"
+          class="w-full h-full object-cover"
+        />
+      </div>
+    </NuxtLink>
+    <div class="flex flex-col">
+      <span class="font-semibold text-sm">Patrick Luz</span>
     </div>
+  </div>
 </template>
-
-<script setup lang="ts">
-const profile = {
-    name: 'Patrick Luz'
-}
-</script>

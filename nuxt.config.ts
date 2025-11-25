@@ -29,7 +29,6 @@ export default defineNuxtConfig({
     '@nuxt/image',
     'shadcn-nuxt',
     '@vueuse/nuxt',
-    '@prisma/nuxt',
     '@nuxtjs/sitemap',
   ],
 

@@ -18,7 +18,6 @@ const navigation = [
     { path: '/', label: 'Início' },
     { path: '/sobre', label: 'Sobre' },
     { path: '/projetos', label: 'Projetos' },
-    { path: '/posts', label: 'Posts' },
     { path: '/contato', label: 'Contato' }
 ]
 

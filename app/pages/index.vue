@@ -15,10 +15,10 @@
       <span class="relative flex h-2.5 w-2.5">
         <span
           class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"
-        ></span>
+        />
         <span
           class="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500"
-        ></span>
+        />
       </span>
       <p class="text-sm text-green-700">
         <span class="font-medium">Disponível para novos projetos</span>
@@ -27,9 +27,8 @@
 
     <!-- Value Proposition -->
     <p class="text-stone-600 leading-relaxed mb-8 text-[15px]">
-      Transformo ideias em produtos digitais. Desenvolvo aplicações web,
-      APIs e automações que resolvem problemas reais e escalam junto com seu
-      negócio.
+      Transformo ideias em produtos digitais. Desenvolvo aplicações web, APIs e
+      automações que resolvem problemas reais e escalam junto com seu negócio.
     </p>
 
     <!-- CTA Buttons -->
@@ -88,27 +87,51 @@
       <p class="text-xs text-stone-400 uppercase tracking-wide mb-4">
         Empresas onde já trabalhei
       </p>
-      <div class="flex flex-wrap items-center gap-6">
+      <div class="relative overflow-hidden">
+        <!-- Fade edges -->
         <div
-          v-for="company in companies"
-          :key="company.name"
-          class="flex items-center gap-2 text-stone-400 hover:text-stone-600 transition-colors"
-        >
-          <img
-            v-if="company.logo && !company.logoError"
-            :src="company.logo"
-            :alt="company.name"
-            class="w-6 h-6 rounded object-contain grayscale hover:grayscale-0 transition-all"
-            @error="company.logoError = true"
-          />
-          <div
-            v-else
-            class="w-6 h-6 rounded bg-stone-100 flex items-center justify-center"
-          >
-            <Icon name="lucide:building-2" class="w-3 h-3 text-stone-400" />
-          </div>
-          <span class="text-sm">{{ company.name }}</span>
-        </div>
+          class="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none"
+        />
+        <div
+          class="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none"
+        />
+
+        <ClientOnly>
+          <Vue3Marquee :duration="25" :pause-on-hover="true" :clone="true">
+            <div
+              v-for="company in companies"
+              :key="company.name"
+              class="group flex items-center gap-2 mx-6 text-stone-400 transition-colors cursor-default"
+            >
+              <img
+                v-if="company.logo"
+                :src="company.logo"
+                :alt="company.name"
+                class="w-6 h-6 rounded object-contain grayscale group-hover:grayscale-0 transition-all"
+              />
+              <span class="text-sm whitespace-nowrap group-hover:text-stone-600 transition-colors">{{ company.name }}</span>
+            </div>
+          </Vue3Marquee>
+          <template #fallback>
+            <div class="flex items-center gap-6 overflow-hidden">
+              <div
+                v-for="company in companies"
+                :key="company.name"
+                class="flex items-center gap-2 text-stone-400"
+              >
+                <img
+                  v-if="company.logo"
+                  :src="company.logo"
+                  :alt="company.name"
+                  class="w-6 h-6 rounded object-contain grayscale"
+                />
+                <span class="text-sm whitespace-nowrap">{{
+                  company.name
+                }}</span>
+              </div>
+            </div>
+          </template>
+        </ClientOnly>
       </div>
     </section>
 
@@ -130,40 +153,11 @@
 
       <!-- Project Cards -->
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div
+        <ProjectCard
           v-for="project in featuredProjects"
           :key="project.id"
-          class="p-5 rounded-xl border border-stone-100 hover:border-stone-200 hover:shadow-sm transition-all bg-white"
-        >
-          <div class="flex items-start justify-between gap-2 mb-2">
-            <h3 class="font-medium text-stone-800 text-[15px]">
-              {{ project.title }}
-            </h3>
-            <span
-              class="shrink-0 text-[10px] px-2 py-0.5 rounded-full bg-green-50 text-green-600"
-            >
-              Concluído
-            </span>
-          </div>
-          <p class="text-sm text-stone-500 mb-4 leading-relaxed">
-            {{ project.description }}
-          </p>
-          <div class="flex flex-wrap gap-1.5 mb-4">
-            <span
-              v-for="tech in project.stack"
-              :key="tech"
-              class="text-[11px] px-2 py-0.5 rounded-full bg-stone-100 text-stone-600"
-            >
-              {{ tech }}
-            </span>
-          </div>
-          <NuxtLink
-            to="/projetos"
-            class="text-sm text-stone-600 underline underline-offset-2 decoration-stone-300 hover:decoration-stone-500 hover:text-stone-800"
-          >
-            Ver detalhes
-          </NuxtLink>
-        </div>
+          :project="project"
+        />
       </div>
     </section>
 
@@ -208,7 +202,7 @@ useSeoMeta({
 const metrics = [
   { value: "+5", label: "Anos de exp." },
   { value: "6", label: "Empresas" },
-  { value: "+300M", label: "Itens processados" },
+  { value: "24h", label: "Tempo de resposta" },
   { value: "+100M", label: "Usuários" },
 ];
 
@@ -225,22 +219,26 @@ const companies = reactive([
   {
     name: "Mercado Livre",
     logo: "https://media.licdn.com/dms/image/v2/D4D0BAQE4q-iBP4fZ0g/company-logo_100_100/B4DZUUipIKG8AQ-/0/1739806380950/mercadolivre_com_logo?e=1765411200&v=beta&t=Q9JvaYxLhQN6c8HinPamXNeOJC1g8ge02gTUFQua7Mw",
-    logoError: false,
   },
   {
     name: "Inter",
     logo: "https://media.licdn.com/dms/image/v2/D4D0BAQFTJpEKJy3XsA/company-logo_100_100/B4DZip9S2KHwAQ-/0/1755198075652/inter_logo?e=1765411200&v=beta&t=mKILdyi35e5kYXzgI2npBPHpJ0IpTTj2E9KtUN2krTQ",
-    logoError: false,
   },
   {
     name: "Hurst Capital",
     logo: "https://media.licdn.com/dms/image/v2/D4D0BAQEva4geRlZthA/company-logo_100_100/B4DZc66LWnH4AU-/0/1749040019261/hurst_capital_logo?e=1765411200&v=beta&t=m1zfU_hXn1tRv6WoFSn7YSC3M94zu7fjGvO2JC1l8dE",
-    logoError: false,
   },
   {
     name: "Compasso UOL",
     logo: "https://media.licdn.com/dms/image/v2/D4D0BAQFd2rOF6ddv6w/company-logo_100_100/company-logo_100_100/0/1737984027931/compass_uol_logo?e=1765411200&v=beta&t=Q8RmFoDC7fs-uggMFgdpM0Ra4ks20xKAP812dzB8bIU",
-    logoError: false,
+  },
+  {
+    name: "MB Labs",
+    logo: "https://media.licdn.com/dms/image/v2/C4D0BAQHKj6jB-nedqA/company-logo_100_100/company-logo_100_100/0/1654875447501/mblabs_logo?e=1765411200&v=beta&t=nwouNfs0tePf_sfkYpaBTwywLrJZfiEuqkwZFhv5Fzo",
+  },
+  {
+    name: "IXCSoft",
+    logo: "https://media.licdn.com/dms/image/v2/D4D0BAQGwyXJkBXf_zg/company-logo_100_100/B4DZkWM6REGkAU-/0/1757014107652/ixcsoft_logo?e=1765411200&v=beta&t=HncjGtSw1XyDy0CCXvs5PaqJFG7z4Nvz-U74H9CSzvg",
   },
 ]);
 
@@ -251,14 +249,32 @@ const featuredProjects = [
     title: "Sistema de Gestão",
     description:
       "Sistema completo para gestão empresarial com dashboard, relatórios e controle de estoque.",
+    image: "/projects/gestao.png",
     stack: ["Vue.js", "Node.js", "PostgreSQL"],
+    status: "completed" as const,
+    year: 2024,
+    type: "web" as const,
+    category: "featured" as const,
+    links: {
+      demo: "https://exemplo.com",
+      github: "https://github.com/plfrancisco/gestao",
+    },
   },
   {
     id: "2",
     title: "E-commerce Platform",
     description:
       "Loja virtual completa com carrinho, pagamentos Stripe e painel administrativo.",
-    stack: ["React", "Go", "PostgreSQL"],
+    image: "/projects/ecommerce.png",
+    stack: ["React", "Go", "PostgreSQL", "Stripe"],
+    status: "completed" as const,
+    year: 2024,
+    type: "web" as const,
+    category: "featured" as const,
+    links: {
+      demo: "https://exemplo.com",
+      caseStudy: "/blog/ecommerce-case",
+    },
   },
 ];
 </script>

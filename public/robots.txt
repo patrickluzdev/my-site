@@ -1,2 +1,10 @@
-User-Agent: *
-Disallow:
+# robots.txt for patrickluz.dev
+
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://patrickluz.dev/sitemap.xml
+
+# Block admin pages
+Disallow: /admin/

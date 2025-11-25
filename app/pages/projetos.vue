@@ -192,6 +192,18 @@ definePageMeta({
   layout: "default",
 });
 
+// SEO
+useSeoMeta({
+  title: "Projetos - Patrick Luz",
+  description:
+    "Portfólio de projetos desenvolvidos: sistemas web, APIs, automações e mais. Veja exemplos de trabalhos em Vue.js, React, Go, Node.js e outras tecnologias.",
+  ogTitle: "Projetos - Patrick Luz",
+  ogDescription:
+    "Portfólio de projetos desenvolvidos: sistemas web, APIs, automações e mais.",
+  ogType: "website",
+  twitterCard: "summary_large_image",
+});
+
 // Types
 interface Project {
   id: string;

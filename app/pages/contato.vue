@@ -283,6 +283,18 @@ definePageMeta({
   layout: "default",
 });
 
+// SEO
+useSeoMeta({
+  title: "Contato - Patrick Luz",
+  description:
+    "Entre em contato para discutir seu projeto. Disponível para desenvolvimento web, APIs, automações e consultoria. Resposta em até 24h.",
+  ogTitle: "Contato - Patrick Luz",
+  ogDescription:
+    "Entre em contato para discutir seu projeto. Disponível para novos projetos.",
+  ogType: "website",
+  twitterCard: "summary_large_image",
+});
+
 // Form state
 const form = reactive({
   name: "",

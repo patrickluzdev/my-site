@@ -192,6 +192,18 @@ definePageMeta({
   layout: "default",
 });
 
+// SEO
+useSeoMeta({
+  title: "Patrick Luz - Engenheiro de Software",
+  description:
+    "Desenvolvedor Full Stack especializado em aplicações web, APIs e automações. +5 anos de experiência em empresas como Mercado Livre, Inter e Hurst Capital.",
+  ogTitle: "Patrick Luz - Engenheiro de Software",
+  ogDescription:
+    "Desenvolvedor Full Stack especializado em aplicações web, APIs e automações.",
+  ogType: "website",
+  twitterCard: "summary_large_image",
+});
+
 // Metrics
 const metrics = [
   { value: "+5", label: "Anos de exp." },

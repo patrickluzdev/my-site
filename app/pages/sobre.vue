@@ -284,6 +284,18 @@ definePageMeta({
   layout: "default",
 });
 
+// SEO
+useSeoMeta({
+  title: "Sobre mim - Patrick Luz",
+  description:
+    "Engenheiro de Software com +5 anos de experiência. Especialista em desenvolvimento web, APIs, automações e DevOps. Disponível para novos projetos.",
+  ogTitle: "Sobre mim - Patrick Luz",
+  ogDescription:
+    "Engenheiro de Software com +5 anos de experiência em empresas como Mercado Livre, Inter e Hurst Capital.",
+  ogType: "profile",
+  twitterCard: "summary_large_image",
+});
+
 // Metrics
 const metrics = [
   { value: "+5", label: "Anos de experiência" },

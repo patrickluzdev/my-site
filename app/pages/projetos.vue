@@ -192,7 +192,6 @@ definePageMeta({
   layout: "default",
 });
 
-// SEO
 useSeoMeta({
   title: "Projetos - Patrick Luz",
   description:
@@ -204,254 +203,21 @@ useSeoMeta({
   twitterCard: "summary_large_image",
 });
 
-// Types
-interface Project {
-  id: string;
-  title: string;
-  description: string;
-  image?: string;
-  stack: string[];
-  status: "development" | "completed" | "archived";
-  year: number;
-  type: "web" | "mobile" | "api" | "tool";
-  category: "featured" | "personal" | "client" | "opensource" | "experiment";
-  links: {
-    github?: string;
-    demo?: string;
-    caseStudy?: string;
-  };
-}
-
-// Project Types for Filter
-const projectTypes = [
-  { label: "Web", value: "web" },
-  { label: "Mobile", value: "mobile" },
-  { label: "API", value: "api" },
-  { label: "Tool", value: "tool" },
-];
-
-// Projects Data
-const projects = ref<Project[]>([
-  // Featured
-  {
-    id: "1",
-    title: "Sistema de Gestão",
-    description:
-      "Sistema completo para gestão empresarial com dashboard, relatórios e controle de estoque.",
-    image: "/projects/gestao.png",
-    stack: ["Vue.js", "Node.js", "PostgreSQL"],
-    status: "completed",
-    year: 2024,
-    type: "web",
-    category: "featured",
-    links: {
-      demo: "https://exemplo.com",
-      github: "https://github.com/plfrancisco/gestao",
-    },
-  },
-  {
-    id: "2",
-    title: "E-commerce Platform",
-    description:
-      "Loja virtual completa com carrinho, pagamentos Stripe e painel administrativo.",
-    image: "/projects/ecommerce.png",
-    stack: ["React", "Go", "PostgreSQL", "Stripe"],
-    status: "completed",
-    year: 2024,
-    type: "web",
-    category: "featured",
-    links: {
-      demo: "https://exemplo.com",
-    },
-  },
-  // Personal
-  {
-    id: "3",
-    title: "Boilerplate Nuxt",
-    description:
-      "Template Nuxt 3 com Tailwind, shadcn/ui, autenticação e estrutura pronta para produção.",
-    stack: ["Nuxt", "Tailwind", "TypeScript"],
-    status: "completed",
-    year: 2024,
-    type: "tool",
-    category: "personal",
-    links: {
-      github: "https://github.com/plfrancisco/nuxt-boilerplate",
-    },
-  },
-  {
-    id: "4",
-    title: "Patrick.dev",
-    description: "Meu site pessoal. O que você está vendo agora.",
-    stack: ["Nuxt", "Tailwind", "Supabase"],
-    status: "development",
-    year: 2024,
-    type: "web",
-    category: "personal",
-    links: {
-      github: "https://github.com/plfrancisco/my-site-vue",
-    },
-  },
-  // Open Source
-  {
-    id: "5",
-    title: "Vue Component Library",
-    description:
-      "Biblioteca de componentes Vue 3 com acessibilidade e customização via CSS variables.",
-    stack: ["Vue.js", "TypeScript", "Vite"],
-    status: "development",
-    year: 2024,
-    type: "tool",
-    category: "opensource",
-    links: {
-      github: "https://github.com/plfrancisco/vue-components",
-      demo: "https://components.patrick.dev",
-    },
-  },
-  // Client
-  {
-    id: "6",
-    title: "App de Delivery",
-    description:
-      "Aplicativo para delivery de comida com rastreamento em tempo real e notificações push.",
-    image: "/projects/delivery.png",
-    stack: ["React Native", "Node.js", "Firebase"],
-    status: "completed",
-    year: 2023,
-    type: "mobile",
-    category: "client",
-    links: {},
-  },
-  {
-    id: "7",
-    title: "API de Pagamentos",
-    description:
-      "Microserviço de processamento de pagamentos com integração multi-gateway.",
-    stack: ["Go", "gRPC", "Redis", "PostgreSQL"],
-    status: "completed",
-    year: 2023,
-    type: "api",
-    category: "client",
-    links: {},
-  },
-  // Experiments
-  {
-    id: "8",
-    title: "CLI Task Manager",
-    description:
-      "Gerenciador de tarefas via terminal com sync para múltiplos dispositivos.",
-    stack: ["Go", "SQLite", "Bubble Tea"],
-    status: "development",
-    year: 2024,
-    type: "tool",
-    category: "experiment",
-    links: {
-      github: "https://github.com/plfrancisco/task-cli",
-    },
-  },
-]);
-
-// Filters State
-const searchQuery = ref("");
-const selectedTypes = ref<string[]>([]);
-const selectedTechs = ref<string[]>([]);
-
-// Get unique techs from all projects
-const availableTechs = computed(() => {
-  const techs = new Set<string>();
-  projects.value.forEach((p) => p.stack.forEach((t) => techs.add(t)));
-  return Array.from(techs).sort();
-});
-
-// Check if any filter is active
-const hasActiveFilters = computed(() => {
-  return (
-    searchQuery.value !== "" ||
-    selectedTypes.value.length > 0 ||
-    selectedTechs.value.length > 0
-  );
-});
-
-// Filter functions
-const toggleTypeFilter = (type: string) => {
-  const index = selectedTypes.value.indexOf(type);
-  if (index === -1) {
-    selectedTypes.value.push(type);
-  } else {
-    selectedTypes.value.splice(index, 1);
-  }
-};
-
-const toggleTechFilter = (tech: string) => {
-  const index = selectedTechs.value.indexOf(tech);
-  if (index === -1) {
-    selectedTechs.value.push(tech);
-  } else {
-    selectedTechs.value.splice(index, 1);
-  }
-};
-
-const clearFilters = () => {
-  searchQuery.value = "";
-  selectedTypes.value = [];
-  selectedTechs.value = [];
-};
-
-// Filter projects
-const filterProjects = (projectList: Project[]) => {
-  return projectList.filter((project) => {
-    // Search filter
-    const matchesSearch =
-      searchQuery.value === "" ||
-      project.title.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
-      project.description
-        .toLowerCase()
-        .includes(searchQuery.value.toLowerCase()) ||
-      project.stack.some((t) =>
-        t.toLowerCase().includes(searchQuery.value.toLowerCase())
-      );
-
-    // Type filter
-    const matchesType =
-      selectedTypes.value.length === 0 ||
-      selectedTypes.value.includes(project.type);
-
-    // Tech filter
-    const matchesTech =
-      selectedTechs.value.length === 0 ||
-      selectedTechs.value.some((tech) => project.stack.includes(tech));
-
-    return matchesSearch && matchesType && matchesTech;
-  });
-};
-
-// Filtered project lists by category
-const filteredFeatured = computed(() =>
-  filterProjects(projects.value.filter((p) => p.category === "featured"))
-);
-
-const filteredPersonal = computed(() =>
-  filterProjects(projects.value.filter((p) => p.category === "personal"))
-);
-
-const filteredOpenSource = computed(() =>
-  filterProjects(projects.value.filter((p) => p.category === "opensource"))
-);
-
-const filteredClient = computed(() =>
-  filterProjects(projects.value.filter((p) => p.category === "client"))
-);
-
-const filteredExperiments = computed(() =>
-  filterProjects(projects.value.filter((p) => p.category === "experiment"))
-);
-
-// All filtered projects for empty state check
-const allFilteredProjects = computed(() => [
-  ...filteredFeatured.value,
-  ...filteredPersonal.value,
-  ...filteredOpenSource.value,
-  ...filteredClient.value,
-  ...filteredExperiments.value,
-]);
+const {
+  projectTypes,
+  availableTechs,
+  searchQuery,
+  selectedTypes,
+  selectedTechs,
+  hasActiveFilters,
+  toggleTypeFilter,
+  toggleTechFilter,
+  clearFilters,
+  featured: filteredFeatured,
+  personal: filteredPersonal,
+  opensource: filteredOpenSource,
+  client: filteredClient,
+  experiments: filteredExperiments,
+  allFiltered: allFilteredProjects,
+} = useProjects();
 </script>

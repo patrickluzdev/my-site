@@ -283,7 +283,6 @@ definePageMeta({
   layout: "default",
 });
 
-// SEO
 useSeoMeta({
   title: "Contato - Patrick Luz",
   description:
@@ -295,91 +294,15 @@ useSeoMeta({
   twitterCard: "summary_large_image",
 });
 
-// Form state
-const form = reactive({
-  name: "",
-  email: "",
-  subject: "",
-  message: "",
-});
-
-const isSubmitting = ref(false);
-const submitSuccess = ref(false);
-
-const handleSubmit = async () => {
-  isSubmitting.value = true;
-
-  // Simula envio (substituir por integração real depois)
-  await new Promise((resolve) => setTimeout(resolve, 1500));
-
-  isSubmitting.value = false;
-  submitSuccess.value = true;
-
-  // Reset form
-  form.name = "";
-  form.email = "";
-  form.subject = "";
-  form.message = "";
-
-  // Hide success message after 5s
-  setTimeout(() => {
-    submitSuccess.value = false;
-  }, 5000);
-};
-
-// WhatsApp link
-const whatsappNumber = "5549999487330";
-const whatsappMessage = encodeURIComponent(
-  "Olá Patrick! Vi seu site e gostaria de conversar sobre um projeto."
-);
-const whatsappLink = `https://wa.me/${whatsappNumber}?text=${whatsappMessage}`;
-
-// FAQ state
-const openFaq = ref<number | null>(null);
-
-const toggleFaq = (index: number) => {
-  openFaq.value = openFaq.value === index ? null : index;
-};
-
-const faqs = [
-  {
-    question: "Quanto custa um projeto?",
-    answer:
-      "O valor depende da complexidade e escopo do projeto. Após entender suas necessidades, envio uma proposta detalhada com valores e prazos. Projetos simples começam a partir de R$ 3.000.",
-  },
-  {
-    question: "Qual o prazo de entrega?",
-    answer:
-      "Varia conforme o projeto. Um site institucional leva de 2 a 4 semanas. Aplicações mais complexas podem levar de 1 a 3 meses. Sempre defino prazos realistas na proposta.",
-  },
-  {
-    question: "Você trabalha com contrato?",
-    answer:
-      "Sim, todos os projetos são formalizados com contrato. Isso garante segurança para ambas as partes, com escopo, prazos e valores bem definidos.",
-  },
-  {
-    question: "Oferece suporte após a entrega?",
-    answer:
-      "Sim, ofereço 30 dias de suporte gratuito após a entrega para correções e pequenos ajustes. Também disponibilizo planos de manutenção mensal.",
-  },
-];
-
-// Social links
-const socials = [
-  {
-    name: "GitHub",
-    icon: "mdi:github",
-    link: "https://github.com/patrickluzdev",
-  },
-  {
-    name: "LinkedIn",
-    icon: "mdi:linkedin",
-    link: "https://www.linkedin.com/in/patrickluzdev",
-  },
-  {
-    name: "Instagram",
-    icon: "mdi:instagram",
-    link: "https://www.instagram.com/patrickluz_dev",
-  },
-];
+const {
+  socialLinks: socials,
+  faqs,
+  whatsappLink,
+  openFaq,
+  toggleFaq,
+  form,
+  isSubmitting,
+  submitSuccess,
+  handleSubmit,
+} = useContact();
 </script>

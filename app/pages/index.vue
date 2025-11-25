@@ -182,11 +182,12 @@
 </template>
 
 <script setup lang="ts">
+import { projects } from "~/data";
+
 definePageMeta({
   layout: "default",
 });
 
-// SEO
 useSeoMeta({
   title: "Patrick Luz - Engenheiro de Software",
   description:
@@ -198,82 +199,9 @@ useSeoMeta({
   twitterCard: "summary_large_image",
 });
 
-// Metrics
-const metrics = [
-  { value: "+5", label: "Anos de exp." },
-  { value: "6", label: "Empresas" },
-  { value: "24h", label: "Tempo de resposta" },
-  { value: "+100M", label: "Usuários" },
-];
-
-// Services
-const services = [
-  { icon: "lucide:globe", title: "Web" },
-  { icon: "lucide:server", title: "APIs" },
-  { icon: "lucide:bot", title: "Automações" },
-  { icon: "lucide:cloud", title: "DevOps" },
-];
-
-// Companies
-const companies = reactive([
-  {
-    name: "Mercado Livre",
-    logo: "https://media.licdn.com/dms/image/v2/D4D0BAQE4q-iBP4fZ0g/company-logo_100_100/B4DZUUipIKG8AQ-/0/1739806380950/mercadolivre_com_logo?e=1765411200&v=beta&t=Q9JvaYxLhQN6c8HinPamXNeOJC1g8ge02gTUFQua7Mw",
-  },
-  {
-    name: "Inter",
-    logo: "https://media.licdn.com/dms/image/v2/D4D0BAQFTJpEKJy3XsA/company-logo_100_100/B4DZip9S2KHwAQ-/0/1755198075652/inter_logo?e=1765411200&v=beta&t=mKILdyi35e5kYXzgI2npBPHpJ0IpTTj2E9KtUN2krTQ",
-  },
-  {
-    name: "Hurst Capital",
-    logo: "https://media.licdn.com/dms/image/v2/D4D0BAQEva4geRlZthA/company-logo_100_100/B4DZc66LWnH4AU-/0/1749040019261/hurst_capital_logo?e=1765411200&v=beta&t=m1zfU_hXn1tRv6WoFSn7YSC3M94zu7fjGvO2JC1l8dE",
-  },
-  {
-    name: "Compasso UOL",
-    logo: "https://media.licdn.com/dms/image/v2/D4D0BAQFd2rOF6ddv6w/company-logo_100_100/company-logo_100_100/0/1737984027931/compass_uol_logo?e=1765411200&v=beta&t=Q8RmFoDC7fs-uggMFgdpM0Ra4ks20xKAP812dzB8bIU",
-  },
-  {
-    name: "MB Labs",
-    logo: "https://media.licdn.com/dms/image/v2/C4D0BAQHKj6jB-nedqA/company-logo_100_100/company-logo_100_100/0/1654875447501/mblabs_logo?e=1765411200&v=beta&t=nwouNfs0tePf_sfkYpaBTwywLrJZfiEuqkwZFhv5Fzo",
-  },
-  {
-    name: "IXCSoft",
-    logo: "https://media.licdn.com/dms/image/v2/D4D0BAQGwyXJkBXf_zg/company-logo_100_100/B4DZkWM6REGkAU-/0/1757014107652/ixcsoft_logo?e=1765411200&v=beta&t=HncjGtSw1XyDy0CCXvs5PaqJFG7z4Nvz-U74H9CSzvg",
-  },
-]);
-
-// Featured Projects
-const featuredProjects = [
-  {
-    id: "1",
-    title: "Sistema de Gestão",
-    description:
-      "Sistema completo para gestão empresarial com dashboard, relatórios e controle de estoque.",
-    image: "/projects/gestao.png",
-    stack: ["Vue.js", "Node.js", "PostgreSQL"],
-    status: "completed" as const,
-    year: 2024,
-    type: "web" as const,
-    category: "featured" as const,
-    links: {
-      demo: "https://exemplo.com",
-      github: "https://github.com/plfrancisco/gestao",
-    },
-  },
-  {
-    id: "2",
-    title: "E-commerce Platform",
-    description:
-      "Loja virtual completa com carrinho, pagamentos Stripe e painel administrativo.",
-    image: "/projects/ecommerce.png",
-    stack: ["React", "Go", "PostgreSQL", "Stripe"],
-    status: "completed" as const,
-    year: 2024,
-    type: "web" as const,
-    category: "featured" as const,
-    links: {
-      demo: "https://exemplo.com",
-    },
-  },
-];
+const { metricsHome: metrics, servicesSimple: services } = useContent();
+const { companies } = useContact();
+const featuredProjects = computed(() =>
+  projects.filter((p) => p.category === "featured")
+);
 </script>

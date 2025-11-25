@@ -1,36 +1,98 @@
-import type { FAQ, Metric, Service } from "./types";
+import type { FAQ, Metric, ServiceCategory } from "./types";
 
-export const servicesSimple: Service[] = [
-  { icon: "lucide:globe", title: "Web" },
-  { icon: "lucide:server", title: "APIs" },
-  { icon: "lucide:bot", title: "Automações" },
-  { icon: "lucide:cloud", title: "DevOps" },
-];
-
-export const servicesDetailed: Service[] = [
+export const serviceCategories: ServiceCategory[] = [
   {
-    icon: "lucide:globe",
-    title: "Desenvolvimento Web",
-    description:
-      "Sites, sistemas e aplicações web modernas com React, Vue.js e Node.js.",
+    name: "Desenvolvimento",
+    services: [
+      {
+        icon: "lucide:globe",
+        title: "Web",
+        description:
+          "Sites, sistemas e aplicações web modernas, responsivas e de alta performance.",
+      },
+      {
+        icon: "lucide:smartphone",
+        title: "Mobile",
+        description:
+          "Aplicativos mobile para iOS e Android com experiência nativa.",
+      },
+      {
+        icon: "lucide:rocket",
+        title: "Landing Pages",
+        description:
+          "Páginas de conversão otimizadas para captar leads e vender produtos.",
+      },
+      {
+        icon: "lucide:shopping-cart",
+        title: "E-commerce",
+        description:
+          "Lojas virtuais completas com integrações de pagamento e gestão de estoque.",
+      },
+      {
+        icon: "lucide:lightbulb",
+        title: "MVPs",
+        description:
+          "Protótipos e produtos mínimos viáveis para validar ideias rapidamente.",
+      },
+      {
+        icon: "lucide:layout-dashboard",
+        title: "Dashboards",
+        description:
+          "Painéis de métricas e analytics para visualização de dados em tempo real.",
+      },
+      {
+        icon: "lucide:layers",
+        title: "SaaS",
+        description:
+          "Plataformas SaaS escaláveis com modelo de assinatura e multi-tenancy.",
+      },
+    ],
   },
   {
-    icon: "lucide:server",
-    title: "Backend & APIs",
-    description:
-      "APIs robustas e escaláveis com Go, Java ou Node.js. Microsserviços e integrações.",
+    name: "Infraestrutura",
+    services: [
+      {
+        icon: "lucide:server",
+        title: "APIs",
+        description:
+          "APIs robustas e escaláveis. Microsserviços e integrações entre sistemas.",
+      },
+      {
+        icon: "lucide:cloud",
+        title: "DevOps",
+        description:
+          "Infraestrutura em nuvem, containers, pipelines de CI/CD e deploy automatizado.",
+      },
+      {
+        icon: "lucide:bot",
+        title: "Automações",
+        description:
+          "Bots, scripts e integrações que automatizam processos e economizam tempo.",
+      },
+    ],
   },
   {
-    icon: "lucide:bot",
-    title: "Automações",
-    description:
-      "Bots, scripts e integrações que automatizam processos e economizam tempo.",
-  },
-  {
-    icon: "lucide:cloud",
-    title: "DevOps & Cloud",
-    description:
-      "Infraestrutura na AWS/GCP, containers com Docker/Kubernetes, CI/CD.",
+    name: "Suporte & Otimização",
+    services: [
+      {
+        icon: "lucide:wrench",
+        title: "Manutenção",
+        description:
+          "Suporte contínuo, correção de bugs e melhorias em sistemas existentes.",
+      },
+      {
+        icon: "lucide:refresh-cw",
+        title: "Migração",
+        description:
+          "Atualização de sistemas legados para tecnologias modernas e performáticas.",
+      },
+      {
+        icon: "lucide:zap",
+        title: "Performance",
+        description:
+          "Melhorias de velocidade, SEO técnico e otimização de recursos.",
+      },
+    ],
   },
 ];
 

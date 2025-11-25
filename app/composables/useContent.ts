@@ -1,14 +1,12 @@
 import {
   metricsAbout,
   metricsHome,
-  servicesDetailed,
-  servicesSimple,
+  serviceCategories,
 } from "~/data";
 
 export const useContent = () => {
   return {
-    servicesSimple,
-    servicesDetailed,
+    serviceCategories,
     metricsHome,
     metricsAbout,
   };

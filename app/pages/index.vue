@@ -64,20 +64,21 @@
     <!-- Services Section -->
     <section class="mb-10">
       <h2 class="text-lg font-semibold text-stone-900 mb-4">O que eu faço</h2>
-      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
-        <div
-          v-for="service in services"
-          :key="service.title"
-          class="p-4 rounded-xl border border-stone-100 bg-white text-center"
-        >
-          <div
-            class="w-10 h-10 mx-auto rounded-lg bg-stone-100 flex items-center justify-center mb-3"
-          >
-            <Icon :name="service.icon" class="w-5 h-5 text-stone-600" />
+      <div class="space-y-4">
+        <div v-for="category in serviceCategories" :key="category.name">
+          <p class="text-xs text-stone-400 uppercase tracking-wide mb-2">
+            {{ category.name }}
+          </p>
+          <div class="flex flex-wrap gap-2">
+            <div
+              v-for="service in category.services"
+              :key="service.title"
+              class="flex items-center gap-2 px-3 py-2 rounded-lg border border-stone-100 bg-white"
+            >
+              <Icon :name="service.icon" class="w-4 h-4 text-stone-500" />
+              <span class="text-sm text-stone-700">{{ service.title }}</span>
+            </div>
           </div>
-          <h3 class="font-medium text-stone-800 text-sm">
-            {{ service.title }}
-          </h3>
         </div>
       </div>
     </section>
@@ -109,7 +110,10 @@
                 :alt="company.name"
                 class="w-6 h-6 rounded object-contain grayscale group-hover:grayscale-0 transition-all"
               />
-              <span class="text-sm whitespace-nowrap group-hover:text-stone-600 transition-colors">{{ company.name }}</span>
+              <span
+                class="text-sm whitespace-nowrap group-hover:text-stone-600 transition-colors"
+                >{{ company.name }}</span
+              >
             </div>
           </Vue3Marquee>
           <template #fallback>
@@ -199,7 +203,7 @@ useSeoMeta({
   twitterCard: "summary_large_image",
 });
 
-const { metricsHome: metrics, servicesSimple: services } = useContent();
+const { metricsHome: metrics, serviceCategories } = useContent();
 const { companies } = useContact();
 const featuredProjects = computed(() =>
   projects.filter((p) => p.category === "featured")

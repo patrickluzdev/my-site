@@ -58,23 +58,34 @@
     <!-- Services Section -->
     <section class="mb-10">
       <h2 class="text-lg font-semibold text-stone-900 mb-4">O que eu faço</h2>
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-        <div
-          v-for="service in services"
-          :key="service.title"
-          class="p-4 rounded-xl border border-stone-100 bg-white"
-        >
-          <div
-            class="w-9 h-9 rounded-lg bg-stone-100 flex items-center justify-center mb-3"
-          >
-            <Icon :name="service.icon" class="w-4 h-4 text-stone-600" />
-          </div>
-          <h3 class="font-medium text-stone-800 text-[15px] mb-1">
-            {{ service.title }}
-          </h3>
-          <p class="text-sm text-stone-500 leading-relaxed">
-            {{ service.description }}
+      <div class="space-y-6">
+        <div v-for="category in serviceCategories" :key="category.name">
+          <p class="text-xs text-stone-400 uppercase tracking-wide mb-3">
+            {{ category.name }}
           </p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div
+              v-for="service in category.services"
+              :key="service.title"
+              class="p-4 rounded-xl border border-stone-100 bg-white"
+            >
+              <div class="flex items-start gap-3">
+                <div
+                  class="w-9 h-9 shrink-0 rounded-lg bg-stone-100 flex items-center justify-center"
+                >
+                  <Icon :name="service.icon" class="w-4 h-4 text-stone-600" />
+                </div>
+                <div>
+                  <h3 class="font-medium text-stone-800 text-[15px] mb-1">
+                    {{ service.title }}
+                  </h3>
+                  <p class="text-sm text-stone-500 leading-relaxed">
+                    {{ service.description }}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -289,6 +300,6 @@ useSeoMeta({
   twitterCard: "summary_large_image",
 });
 
-const { metricsAbout: metrics, servicesDetailed: services } = useContent();
+const { metricsAbout: metrics, serviceCategories } = useContent();
 const { experiences, education, skillCategories, testimonials, calculateDuration } = useProfile();
 </script>

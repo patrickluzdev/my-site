@@ -60,6 +60,11 @@ export interface Service {
   description?: string;
 }
 
+export interface ServiceCategory {
+  name: string;
+  services: Service[];
+}
+
 export interface Metric {
   value: string;
   label: string;

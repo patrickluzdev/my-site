@@ -70,6 +70,7 @@
           rel="noopener noreferrer"
           class="text-stone-400 hover:text-stone-700 transition-colors"
           title="Ver código"
+          @click="handleGithubClick"
         >
           <Icon name="lucide:github" class="w-4 h-4" />
         </a>
@@ -80,6 +81,7 @@
           rel="noopener noreferrer"
           class="text-stone-400 hover:text-stone-700 transition-colors"
           title="Ver demo"
+          @click="handleDemoClick"
         >
           <Icon name="lucide:external-link" class="w-4 h-4" />
         </a>
@@ -88,6 +90,7 @@
           :to="project.links.caseStudy"
           class="text-stone-400 hover:text-stone-700 transition-colors"
           title="Ver case study"
+          @click="handleCaseStudyClick"
         >
           <Icon name="lucide:file-text" class="w-4 h-4" />
         </NuxtLink>
@@ -97,6 +100,12 @@
 </template>
 
 <script setup lang="ts">
+const {
+  trackProjectGithubClick,
+  trackProjectDemoClick,
+  trackProjectCaseStudyClick,
+} = useAnalytics();
+
 interface Project {
   id: string;
   title: string;
@@ -119,6 +128,18 @@ const props = defineProps<{
 }>();
 
 const imageError = ref(false);
+
+const handleGithubClick = () => {
+  trackProjectGithubClick(props.project.id, props.project.title);
+};
+
+const handleDemoClick = () => {
+  trackProjectDemoClick(props.project.id, props.project.title);
+};
+
+const handleCaseStudyClick = () => {
+  trackProjectCaseStudyClick(props.project.id, props.project.title);
+};
 
 const statusLabel = computed(() => {
   const labels = {

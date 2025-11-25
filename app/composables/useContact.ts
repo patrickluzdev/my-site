@@ -3,11 +3,44 @@ import { companies, contactInfo, faqs, getWhatsAppLink, socialLinks } from "~/da
 
 export const useContact = () => {
   const config = useRuntimeConfig();
+  const {
+    trackContactFormStart,
+    trackContactSubjectSelected,
+    trackContactFormSubmit,
+    trackContactFormSuccess,
+    trackContactFormError,
+    trackFaqOpen,
+    trackFaqClose,
+  } = useAnalytics();
 
   const openFaq = ref<number | null>(null);
+  const formStarted = ref(false);
 
   const toggleFaq = (index: number) => {
-    openFaq.value = openFaq.value === index ? null : index;
+    const wasOpen = openFaq.value === index;
+    openFaq.value = wasOpen ? null : index;
+
+    if (wasOpen) {
+      trackFaqClose(index);
+    } else {
+      const faq = faqs[index];
+      if (faq) {
+        trackFaqOpen(index, faq.question);
+      }
+    }
+  };
+
+  const handleFormStart = () => {
+    if (!formStarted.value) {
+      formStarted.value = true;
+      trackContactFormStart();
+    }
+  };
+
+  const handleSubjectChange = (subject: string) => {
+    if (subject) {
+      trackContactSubjectSelected(subject);
+    }
   };
 
   const form = reactive({
@@ -24,7 +57,9 @@ export const useContact = () => {
   const handleSubmit = async () => {
     isSubmitting.value = true;
     submitError.value = false;
-    
+
+    trackContactFormSubmit();
+
     try {
       await emailjs.send(
         config.public.emailjsServiceId,
@@ -38,17 +73,23 @@ export const useContact = () => {
         config.public.emailjsPublicKey
       );
 
+      trackContactFormSuccess();
+
       submitSuccess.value = true;
       form.name = "";
       form.email = "";
       form.subject = "";
       form.message = "";
+      formStarted.value = false;
 
       setTimeout(() => {
         submitSuccess.value = false;
       }, 5000);
     } catch (error) {
       console.error("Erro ao enviar email:", error);
+
+      trackContactFormError(error instanceof Error ? error.message : 'unknown');
+
       submitError.value = true;
 
       setTimeout(() => {
@@ -82,5 +123,7 @@ export const useContact = () => {
     submitError,
     handleSubmit,
     resetForm,
+    handleFormStart,
+    handleSubjectChange,
   };
 };

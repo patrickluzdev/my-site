@@ -98,6 +98,7 @@
       <NuxtLink
         to="/contato"
         class="text-sm text-stone-600 underline underline-offset-2 decoration-stone-300 hover:decoration-stone-500 hover:text-stone-800"
+        @click="trackCtaClick('Vamos conversar', 'hire_me_card', '/contato')"
       >
         Vamos conversar
       </NuxtLink>
@@ -201,9 +202,12 @@ defineOgImage({
   component: "OgImageTemplate",
   props: {
     title: "Meus Projetos",
-    description: "Portfólio de projetos: sistemas web, APIs, automações e mais.",
+    description:
+      "Portfólio de projetos: sistemas web, APIs, automações e mais.",
   },
 });
+
+const { trackCtaClick } = useAnalytics();
 
 const {
   availableTypes,
@@ -221,5 +225,12 @@ const {
   client: filteredClient,
   experiments: filteredExperiments,
   allFiltered: allFilteredProjects,
+  trackSearchDebounced,
 } = useProjects();
+
+watch([searchQuery, allFilteredProjects], ([query, results]) => {
+  if (query) {
+    trackSearchDebounced(query, results.length);
+  }
+});
 </script>

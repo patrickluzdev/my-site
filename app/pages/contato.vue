@@ -50,6 +50,7 @@
               placeholder="Seu nome"
               required
               class="w-full px-4 py-2.5 text-sm border border-stone-200 rounded-lg focus:outline-none focus:border-stone-400 transition-colors"
+              @focus="handleFormStart"
             />
           </div>
           <div>
@@ -153,6 +154,7 @@
           target="_blank"
           rel="noopener noreferrer"
           class="flex items-center gap-3 py-3 px-4 rounded-xl border border-green-200 bg-green-50 hover:bg-green-100 transition-colors"
+          @click="trackWhatsappClick('contato')"
         >
           <div
             class="w-9 h-9 rounded-full bg-green-500 flex items-center justify-center shrink-0"
@@ -169,6 +171,7 @@
         <a
           href="mailto:eu@patrickluz.dev"
           class="flex items-center gap-3 py-3 px-4 rounded-xl border border-stone-100 bg-stone-50/50 hover:bg-stone-100 transition-colors"
+          @click="trackEmailClick"
         >
           <div
             class="w-9 h-9 rounded-full bg-white border border-stone-100 flex items-center justify-center shrink-0"
@@ -185,6 +188,7 @@
         <a
           href="tel:+5549999487330"
           class="flex items-center gap-3 py-3 px-4 rounded-xl border border-stone-100 bg-stone-50/50 hover:bg-stone-100 transition-colors"
+          @click="trackPhoneClick"
         >
           <div
             class="w-9 h-9 rounded-full bg-white border border-stone-100 flex items-center justify-center shrink-0"
@@ -261,6 +265,7 @@
           target="_blank"
           rel="noopener noreferrer"
           class="flex items-center gap-2 py-2 px-3 rounded-lg border border-stone-100 hover:border-stone-200 hover:bg-stone-50 transition-all text-sm text-stone-600 hover:text-stone-800"
+          @click="trackSocialClick(social.name)"
         >
           <Icon :name="social.icon" class="w-4 h-4" />
           {{ social.name }}
@@ -321,5 +326,21 @@ const {
   submitSuccess,
   submitError,
   handleSubmit,
+  handleFormStart,
+  handleSubjectChange,
 } = useContact();
+
+const {
+  trackWhatsappClick,
+  trackEmailClick,
+  trackPhoneClick,
+  trackSocialClick,
+} = useAnalytics();
+
+watch(
+  () => form.subject,
+  (newSubject) => {
+    handleSubjectChange(newSubject);
+  }
+);
 </script>

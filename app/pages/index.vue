@@ -36,12 +36,14 @@
       <NuxtLink
         to="/contato"
         class="px-5 py-2.5 bg-stone-800 text-white text-sm font-medium rounded-lg hover:bg-stone-900 transition-colors"
+        @click="trackHeroCtaClick('Fale comigo')"
       >
         Fale comigo
       </NuxtLink>
       <NuxtLink
         to="/projetos"
         class="px-5 py-2.5 border border-stone-200 text-stone-700 text-sm font-medium rounded-lg hover:bg-stone-50 transition-colors"
+        @click="trackHeroCtaClick('Ver projetos')"
       >
         Ver projetos
       </NuxtLink>
@@ -150,6 +152,7 @@
         <NuxtLink
           to="/projetos"
           class="text-sm text-stone-500 hover:text-stone-700 transition-colors"
+          @click="trackCtaClick('Ver todos', 'featured_projects', '/projetos')"
         >
           Ver todos
         </NuxtLink>
@@ -178,6 +181,7 @@
       <NuxtLink
         to="/contato"
         class="inline-flex px-5 py-2.5 bg-stone-800 text-white text-sm font-medium rounded-lg hover:bg-stone-900 transition-colors"
+        @click="trackCtaClick('Entrar em contato', 'footer_cta', '/contato')"
       >
         Entrar em contato
       </NuxtLink>
@@ -187,6 +191,8 @@
 
 <script setup lang="ts">
 import { projects } from "~/data";
+
+const { trackCtaClick, trackHeroCtaClick } = useAnalytics();
 
 definePageMeta({
   layout: "default",

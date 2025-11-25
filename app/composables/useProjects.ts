@@ -2,9 +2,16 @@ import type { Project, ProjectCategory, ProjectType } from "~/data";
 import { projects, projectTypes } from "~/data";
 
 export const useProjects = () => {
+  const {
+    trackProjectFilterClick,
+    trackProjectSearch,
+    trackProjectClearFilters,
+  } = useAnalytics();
+
   const searchQuery = ref("");
   const selectedTypes = ref<ProjectType[]>([]);
   const selectedTechs = ref<string[]>([]);
+  const searchDebounceTimeout = ref<NodeJS.Timeout | null>(null);
 
   const availableTypes = computed(() => {
     const types = new Set(projects.map((p) => p.type));
@@ -27,26 +34,52 @@ export const useProjects = () => {
 
   const toggleTypeFilter = (type: ProjectType) => {
     const index = selectedTypes.value.indexOf(type);
-    if (index === -1) {
+    const willBeSelected = index === -1;
+
+    if (willBeSelected) {
       selectedTypes.value.push(type);
     } else {
       selectedTypes.value.splice(index, 1);
     }
+
+    trackProjectFilterClick('type', type, willBeSelected);
   };
 
   const toggleTechFilter = (tech: string) => {
     const index = selectedTechs.value.indexOf(tech);
-    if (index === -1) {
+    const willBeSelected = index === -1;
+
+    if (willBeSelected) {
       selectedTechs.value.push(tech);
     } else {
       selectedTechs.value.splice(index, 1);
     }
+
+    trackProjectFilterClick('tech', tech, willBeSelected);
   };
 
   const clearFilters = () => {
+    const activeCount = selectedTypes.value.length + selectedTechs.value.length + (searchQuery.value ? 1 : 0);
+
+    if (activeCount > 0) {
+      trackProjectClearFilters(activeCount);
+    }
+
     searchQuery.value = "";
     selectedTypes.value = [];
     selectedTechs.value = [];
+  };
+
+  const trackSearchDebounced = (query: string, resultCount: number) => {
+    if (searchDebounceTimeout.value) {
+      clearTimeout(searchDebounceTimeout.value);
+    }
+
+    searchDebounceTimeout.value = setTimeout(() => {
+      if (query.length >= 2) {
+        trackProjectSearch(query, resultCount);
+      }
+    }, 500);
   };
 
   const filterProjects = (projectList: Project[]) => {
@@ -111,5 +144,6 @@ export const useProjects = () => {
     client,
     experiments,
     allFiltered,
+    trackSearchDebounced,
   };
 };

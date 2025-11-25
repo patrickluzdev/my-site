@@ -35,7 +35,10 @@
   },
   "devDependencies": {
     "@faker-js/faker": "^10.1.0",
+    "@iconify-json/logos": "^1.2.10",
     "@iconify-json/lucide": "^1.2.73",
+    "@iconify-json/mdi": "^1.2.3",
+    "@iconify-json/vscode-icons": "^1.2.36",
     "@prisma/extension-accelerate": "^2.0.2",
     "@tailwindcss/vite": "^4.1.17",
     "prisma": "^6.19.0",

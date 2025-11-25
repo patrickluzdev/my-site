@@ -1,211 +1,448 @@
 <template>
   <div>
-    <main class="max-w-6xl mx-auto px-4 py-8">
-      <div class="mb-8">
-        <h1 class="text-4xl font-bold mb-3">Meus Projetos</h1>
-        <p class="text-muted-foreground text-lg">
-          Confira alguns dos projetos que desenvolvi, desde aplicações web até sistemas completos.
-        </p>
+    <!-- Header Section -->
+    <header class="mb-6">
+      <h1 class="text-2xl font-semibold text-stone-900 mb-1">
+        Meus projetos
+      </h1>
+      <p class="text-stone-500 italic text-[15px]">
+        Gosto de construir projetos incríveis
+      </p>
+    </header>
+
+    <!-- Description -->
+    <p class="text-stone-600 leading-relaxed mb-8 text-[15px]">
+      Esta é uma visão geral dos projetos em que trabalhei. Filtre por
+      tecnologia ou tipo para encontrar o que procura.
+    </p>
+
+    <!-- Filters -->
+    <div class="mb-10 space-y-4">
+      <!-- Search -->
+      <div class="relative">
+        <Icon
+          name="lucide:search"
+          class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-stone-400"
+        />
+        <input
+          v-model="searchQuery"
+          type="text"
+          placeholder="Buscar projetos..."
+          class="w-full pl-9 pr-4 py-2 text-sm border border-stone-200 rounded-lg focus:outline-none focus:border-stone-400 transition-colors"
+        />
       </div>
 
-      <div v-if="loadingCategories" class="mb-8">
-        <div class="flex gap-2">
-          <div v-for="i in 5" :key="i" class="h-8 w-24 bg-muted animate-pulse rounded-md" />
-        </div>
-      </div>
-
-      <div v-else class="mb-8 flex flex-wrap gap-2">
-        <Button
-          v-for="category in categories"
-          :key="category.slug"
-          :variant="selectedCategory === category.slug ? 'default' : 'outline'"
-          size="sm"
-          @click="selectCategory(category.slug)"
+      <!-- Filter Tags -->
+      <div class="flex flex-wrap gap-2">
+        <!-- Type Filters -->
+        <button
+          v-for="type in projectTypes"
+          :key="type.value"
+          @click="toggleTypeFilter(type.value)"
+          class="px-3 py-1 text-xs rounded-full border transition-colors"
+          :class="
+            selectedTypes.includes(type.value)
+              ? 'bg-stone-800 text-white border-stone-800'
+              : 'bg-white text-stone-600 border-stone-200 hover:border-stone-400'
+          "
         >
-          {{ category.name }}
-          <span v-if="category.count > 0" class="ml-1 text-xs opacity-70">({{ category.count }})</span>
-        </Button>
-      </div>
+          {{ type.label }}
+        </button>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <span class="w-px h-5 bg-stone-200 self-center mx-1" />
+
+        <!-- Tech Filters -->
+        <button
+          v-for="tech in availableTechs"
+          :key="tech"
+          @click="toggleTechFilter(tech)"
+          class="px-3 py-1 text-xs rounded-full border transition-colors"
+          :class="
+            selectedTechs.includes(tech)
+              ? 'bg-stone-800 text-white border-stone-800'
+              : 'bg-white text-stone-600 border-stone-200 hover:border-stone-400'
+          "
+        >
+          {{ tech }}
+        </button>
+
+        <!-- Clear Filters -->
+        <button
+          v-if="hasActiveFilters"
+          @click="clearFilters"
+          class="px-3 py-1 text-xs text-stone-400 hover:text-stone-600 transition-colors"
+        >
+          Limpar filtros
+        </button>
+      </div>
+    </div>
+
+    <!-- Featured Section -->
+    <section v-if="filteredFeatured.length > 0" class="mb-10">
+      <h2 class="text-lg font-semibold text-stone-900 mb-4">Destaques</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <ProjectCard
-          v-for="project in projects"
+          v-for="project in filteredFeatured"
           :key="project.id"
           :project="project"
         />
       </div>
+    </section>
 
-      <div v-if="loading" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
-        <div
-          v-for="i in 3"
-          :key="i"
-          class="h-96 bg-muted animate-pulse rounded-lg"
+    <!-- Hire Me Card -->
+    <div class="p-5 rounded-xl border-2 border-dashed border-stone-200 mb-10">
+      <h3 class="font-medium text-stone-500 mb-2 text-[15px]">
+        Seu projeto aqui?
+      </h3>
+      <p class="text-sm text-stone-400 mb-4 leading-relaxed">
+        Precisa de um desenvolvedor full-stack? Estou aberto a trabalhar em
+        novos projetos legais.
+      </p>
+      <NuxtLink
+        to="/contato"
+        class="text-sm text-stone-600 underline underline-offset-2 decoration-stone-300 hover:decoration-stone-500 hover:text-stone-800"
+      >
+        Me contrate
+      </NuxtLink>
+    </div>
+
+    <!-- Personal Projects Section -->
+    <section v-if="filteredPersonal.length > 0" class="mb-10">
+      <h2 class="text-lg font-semibold text-stone-900 mb-4">
+        Projetos pessoais
+      </h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <ProjectCard
+          v-for="project in filteredPersonal"
+          :key="project.id"
+          :project="project"
         />
       </div>
+    </section>
 
-      <div
-        v-if="!loading && projects.length === 0"
-        class="text-center py-12"
+    <!-- Open Source Section -->
+    <section v-if="filteredOpenSource.length > 0" class="mb-10">
+      <h2 class="text-lg font-semibold text-stone-900 mb-4">Open Source</h2>
+      <p class="text-stone-500 text-[15px] mb-4">
+        Contribuições e projetos de código aberto.
+      </p>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <ProjectCard
+          v-for="project in filteredOpenSource"
+          :key="project.id"
+          :project="project"
+        />
+      </div>
+    </section>
+
+    <div
+      v-if="filteredClient.length > 0 || filteredExperiments.length > 0"
+      class="h-px bg-stone-100 my-10"
+    />
+
+    <!-- Client Projects Section -->
+    <section v-if="filteredClient.length > 0" class="mb-10">
+      <h2 class="text-lg font-semibold text-stone-900 mb-4">Freelance</h2>
+      <p class="text-stone-500 text-[15px] mb-4">
+        Projetos desenvolvidos para clientes.
+      </p>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <ProjectCard
+          v-for="project in filteredClient"
+          :key="project.id"
+          :project="project"
+        />
+      </div>
+    </section>
+
+    <!-- Experiments Section -->
+    <section v-if="filteredExperiments.length > 0">
+      <h2 class="text-lg font-semibold text-stone-900 mb-4">Experimentos</h2>
+      <p class="text-stone-500 text-[15px] mb-4">
+        Protótipos e ideias em desenvolvimento.
+      </p>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <ProjectCard
+          v-for="project in filteredExperiments"
+          :key="project.id"
+          :project="project"
+        />
+      </div>
+    </section>
+
+    <!-- Empty State -->
+    <div
+      v-if="allFilteredProjects.length === 0"
+      class="text-center py-16 text-stone-400"
+    >
+      <Icon name="lucide:search-x" class="w-10 h-10 mx-auto mb-3 opacity-50" />
+      <p class="text-sm">Nenhum projeto encontrado com esses filtros.</p>
+      <button
+        @click="clearFilters"
+        class="mt-2 text-sm text-stone-600 underline underline-offset-2"
       >
-        <Icon name="lucide:folder-open" class="w-16 h-16 mx-auto text-muted-foreground mb-4" />
-        <p class="text-muted-foreground text-lg">
-          Nenhum projeto encontrado nesta categoria.
-        </p>
-      </div>
-
-      <div v-if="hasNextPage && !loading" class="mt-8 text-center">
-        <Button
-          @click="loadMore"
-          :disabled="loadingMore"
-          size="lg"
-          variant="outline"
-        >
-          <Icon
-            v-if="loadingMore"
-            name="lucide:loader-2"
-            class="w-4 h-4 mr-2 animate-spin"
-          />
-          {{ loadingMore ? 'Carregando...' : 'Carregar mais projetos' }}
-        </Button>
-      </div>
-    </main>
+        Limpar filtros
+      </button>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import ProjectCard from '~/components/project-card/ProjectCard.vue'
-
 definePageMeta({
-  layout: 'default'
-})
+  layout: "default",
+});
 
-interface ProjectStats {
-  stars?: number
-  users?: string
-  performance?: string
-}
-
+// Types
 interface Project {
-  id: string
-  title: string
-  slug: string
-  description: string
-  image?: string
-  technologies: string[]
-  category: string
-  categorySlug?: string
-  status?: string
-  featured?: boolean
-  demoUrl?: string
-  githubUrl?: string
-  link?: string
-  stats?: ProjectStats
+  id: string;
+  title: string;
+  description: string;
+  image?: string;
+  stack: string[];
+  status: "development" | "completed" | "archived";
+  year: number;
+  type: "web" | "mobile" | "api" | "tool";
+  category: "featured" | "personal" | "client" | "opensource" | "experiment";
+  links: {
+    github?: string;
+    demo?: string;
+    caseStudy?: string;
+  };
 }
 
-interface PaginationInfo {
-  nextCursor: string | null
-  hasNextPage: boolean
-}
+// Project Types for Filter
+const projectTypes = [
+  { label: "Web", value: "web" },
+  { label: "Mobile", value: "mobile" },
+  { label: "API", value: "api" },
+  { label: "Tool", value: "tool" },
+];
 
-interface Category {
-  id: number
-  name: string
-  slug: string
-  description?: string
-  icon?: string
-  count: number
-}
+// Projects Data
+const projects = ref<Project[]>([
+  // Featured
+  {
+    id: "1",
+    title: "Sistema de Gestão",
+    description:
+      "Sistema completo para gestão empresarial com dashboard, relatórios e controle de estoque.",
+    image: "/projects/gestao.png",
+    stack: ["Vue.js", "Node.js", "PostgreSQL"],
+    status: "completed",
+    year: 2024,
+    type: "web",
+    category: "featured",
+    links: {
+      demo: "https://exemplo.com",
+      github: "https://github.com/plfrancisco/gestao",
+    },
+  },
+  {
+    id: "2",
+    title: "E-commerce Platform",
+    description:
+      "Loja virtual completa com carrinho, pagamentos Stripe e painel administrativo.",
+    image: "/projects/ecommerce.png",
+    stack: ["React", "Go", "PostgreSQL", "Stripe"],
+    status: "completed",
+    year: 2024,
+    type: "web",
+    category: "featured",
+    links: {
+      demo: "https://exemplo.com",
+      caseStudy: "/blog/ecommerce-case",
+    },
+  },
+  // Personal
+  {
+    id: "3",
+    title: "Boilerplate Nuxt",
+    description:
+      "Template Nuxt 3 com Tailwind, shadcn/ui, autenticação e estrutura pronta para produção.",
+    stack: ["Nuxt", "Tailwind", "TypeScript"],
+    status: "completed",
+    year: 2024,
+    type: "tool",
+    category: "personal",
+    links: {
+      github: "https://github.com/plfrancisco/nuxt-boilerplate",
+    },
+  },
+  {
+    id: "4",
+    title: "Patrick.dev",
+    description: "Meu site pessoal. O que você está vendo agora.",
+    stack: ["Nuxt", "Tailwind", "Supabase"],
+    status: "development",
+    year: 2024,
+    type: "web",
+    category: "personal",
+    links: {
+      github: "https://github.com/plfrancisco/my-site-vue",
+    },
+  },
+  // Open Source
+  {
+    id: "5",
+    title: "Vue Component Library",
+    description:
+      "Biblioteca de componentes Vue 3 com acessibilidade e customização via CSS variables.",
+    stack: ["Vue.js", "TypeScript", "Vite"],
+    status: "development",
+    year: 2024,
+    type: "tool",
+    category: "opensource",
+    links: {
+      github: "https://github.com/plfrancisco/vue-components",
+      demo: "https://components.patrick.dev",
+    },
+  },
+  // Client
+  {
+    id: "6",
+    title: "App de Delivery",
+    description:
+      "Aplicativo para delivery de comida com rastreamento em tempo real e notificações push.",
+    image: "/projects/delivery.png",
+    stack: ["React Native", "Node.js", "Firebase"],
+    status: "completed",
+    year: 2023,
+    type: "mobile",
+    category: "client",
+    links: {
+      caseStudy: "/blog/delivery-case",
+    },
+  },
+  {
+    id: "7",
+    title: "API de Pagamentos",
+    description:
+      "Microserviço de processamento de pagamentos com integração multi-gateway.",
+    stack: ["Go", "gRPC", "Redis", "PostgreSQL"],
+    status: "completed",
+    year: 2023,
+    type: "api",
+    category: "client",
+    links: {},
+  },
+  // Experiments
+  {
+    id: "8",
+    title: "CLI Task Manager",
+    description:
+      "Gerenciador de tarefas via terminal com sync para múltiplos dispositivos.",
+    stack: ["Go", "SQLite", "Bubble Tea"],
+    status: "development",
+    year: 2024,
+    type: "tool",
+    category: "experiment",
+    links: {
+      github: "https://github.com/plfrancisco/task-cli",
+    },
+  },
+]);
 
-const selectedCategory = ref('todos')
-const projects = ref<Project[]>([])
-const nextCursor = ref<string | null>(null)
-const hasNextPage = ref(false)
-const loading = ref(true)
-const loadingMore = ref(false)
-const loadingCategories = ref(true)
-const categories = ref<Category[]>([])
+// Filters State
+const searchQuery = ref("");
+const selectedTypes = ref<string[]>([]);
+const selectedTechs = ref<string[]>([]);
 
-const loadCategories = async () => {
-  try {
-    loadingCategories.value = true
-    const data = await $fetch<Category[]>('/api/projects/categories')
-    categories.value = data
-  } catch (error) {
-    console.error('Error loading categories:', error)
-  } finally {
-    loadingCategories.value = false
+// Get unique techs from all projects
+const availableTechs = computed(() => {
+  const techs = new Set<string>();
+  projects.value.forEach((p) => p.stack.forEach((t) => techs.add(t)));
+  return Array.from(techs).sort();
+});
+
+// Check if any filter is active
+const hasActiveFilters = computed(() => {
+  return (
+    searchQuery.value !== "" ||
+    selectedTypes.value.length > 0 ||
+    selectedTechs.value.length > 0
+  );
+});
+
+// Filter functions
+const toggleTypeFilter = (type: string) => {
+  const index = selectedTypes.value.indexOf(type);
+  if (index === -1) {
+    selectedTypes.value.push(type);
+  } else {
+    selectedTypes.value.splice(index, 1);
   }
-}
+};
 
-const loadProjects = async (cursor?: string) => {
-  try {
-    const params: Record<string, any> = {
-      limit: 12,
-    }
-
-    if (cursor) {
-      params.cursor = cursor
-    }
-
-    if (selectedCategory.value !== 'todos') {
-      params.category = selectedCategory.value
-    }
-
-    const response = await $fetch<{
-      data: Project[]
-      pagination: PaginationInfo
-    }>('/api/projects', {
-      params,
-    })
-
-    return response
-  } catch (error) {
-    console.error('Error loading projects:', error)
-    throw error
+const toggleTechFilter = (tech: string) => {
+  const index = selectedTechs.value.indexOf(tech);
+  if (index === -1) {
+    selectedTechs.value.push(tech);
+  } else {
+    selectedTechs.value.splice(index, 1);
   }
-}
+};
 
-const loadInitial = async () => {
-  try {
-    loading.value = true
-    const response = await loadProjects()
-    projects.value = response.data
-    nextCursor.value = response.pagination.nextCursor
-    hasNextPage.value = response.pagination.hasNextPage
-  } catch (error) {
-    console.error('Error loading initial projects:', error)
-  } finally {
-    loading.value = false
-  }
-}
+const clearFilters = () => {
+  searchQuery.value = "";
+  selectedTypes.value = [];
+  selectedTechs.value = [];
+};
 
-const loadMore = async () => {
-  if (!nextCursor.value || loadingMore.value) return
+// Filter projects
+const filterProjects = (projectList: Project[]) => {
+  return projectList.filter((project) => {
+    // Search filter
+    const matchesSearch =
+      searchQuery.value === "" ||
+      project.title.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
+      project.description
+        .toLowerCase()
+        .includes(searchQuery.value.toLowerCase()) ||
+      project.stack.some((t) =>
+        t.toLowerCase().includes(searchQuery.value.toLowerCase())
+      );
 
-  try {
-    loadingMore.value = true
-    const response = await loadProjects(nextCursor.value)
-    projects.value = [...projects.value, ...response.data]
-    nextCursor.value = response.pagination.nextCursor
-    hasNextPage.value = response.pagination.hasNextPage
-  } catch (error) {
-    console.error('Error loading more projects:', error)
-  } finally {
-    loadingMore.value = false
-  }
-}
+    // Type filter
+    const matchesType =
+      selectedTypes.value.length === 0 ||
+      selectedTypes.value.includes(project.type);
 
-const selectCategory = async (slug: string) => {
-  if (selectedCategory.value === slug) return
+    // Tech filter
+    const matchesTech =
+      selectedTechs.value.length === 0 ||
+      selectedTechs.value.some((tech) => project.stack.includes(tech));
 
-  selectedCategory.value = slug
-  await loadInitial()
-}
+    return matchesSearch && matchesType && matchesTech;
+  });
+};
 
-onMounted(async () => {
-  await Promise.all([
-    loadCategories(),
-    loadInitial()
-  ])
-})
+// Filtered project lists by category
+const filteredFeatured = computed(() =>
+  filterProjects(projects.value.filter((p) => p.category === "featured"))
+);
+
+const filteredPersonal = computed(() =>
+  filterProjects(projects.value.filter((p) => p.category === "personal"))
+);
+
+const filteredOpenSource = computed(() =>
+  filterProjects(projects.value.filter((p) => p.category === "opensource"))
+);
+
+const filteredClient = computed(() =>
+  filterProjects(projects.value.filter((p) => p.category === "client"))
+);
+
+const filteredExperiments = computed(() =>
+  filterProjects(projects.value.filter((p) => p.category === "experiment"))
+);
+
+// All filtered projects for empty state check
+const allFilteredProjects = computed(() => [
+  ...filteredFeatured.value,
+  ...filteredPersonal.value,
+  ...filteredOpenSource.value,
+  ...filteredClient.value,
+  ...filteredExperiments.value,
+]);
 </script>

@@ -1,388 +1,373 @@
 <template>
   <div>
-    <main class="max-w-6xl mx-auto px-4 py-8">
-      <div class="mb-12 text-center">
-        <h1 class="text-4xl font-bold mb-4">Entre em Contato 📬</h1>
-        <p class="text-muted-foreground text-xl max-w-2xl mx-auto">
-          Vamos conversar sobre seu próximo projeto ou oportunidade de colaboração.
+    <!-- Header Section -->
+    <header class="mb-6">
+      <h1 class="text-2xl font-semibold text-stone-900 mb-1">Contato</h1>
+      <p class="text-stone-500 italic text-[15px]">
+        Vamos conversar sobre seu projeto?
+      </p>
+    </header>
+
+    <!-- Availability Status -->
+    <div
+      class="flex items-center gap-2 px-4 py-3 rounded-xl bg-green-50 border border-green-100 mb-8"
+    >
+      <span class="relative flex h-2.5 w-2.5">
+        <span
+          class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"
+        ></span>
+        <span
+          class="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500"
+        ></span>
+      </span>
+      <p class="text-sm text-green-700">
+        <span class="font-medium">Disponível para novos projetos</span>
+        <span class="text-green-600 ml-1">· Respondo em até 24h</span>
+      </p>
+    </div>
+
+    <!-- Description -->
+    <p class="text-stone-600 leading-relaxed mb-10 text-[15px]">
+      Tem um projeto em mente ou quer tirar alguma dúvida? Preencha o formulário
+      abaixo ou entre em contato diretamente pelo WhatsApp.
+    </p>
+
+    <!-- Contact Form -->
+    <section class="mb-10">
+      <h2 class="text-lg font-semibold text-stone-900 mb-4">
+        Envie uma mensagem
+      </h2>
+      <form @submit.prevent="handleSubmit" class="space-y-4">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label for="name" class="block text-sm text-stone-600 mb-1.5"
+              >Nome</label
+            >
+            <input
+              id="name"
+              v-model="form.name"
+              type="text"
+              placeholder="Seu nome"
+              required
+              class="w-full px-4 py-2.5 text-sm border border-stone-200 rounded-lg focus:outline-none focus:border-stone-400 transition-colors"
+            />
+          </div>
+          <div>
+            <label for="email" class="block text-sm text-stone-600 mb-1.5"
+              >E-mail</label
+            >
+            <input
+              id="email"
+              v-model="form.email"
+              type="email"
+              placeholder="seu@email.com"
+              required
+              class="w-full px-4 py-2.5 text-sm border border-stone-200 rounded-lg focus:outline-none focus:border-stone-400 transition-colors"
+            />
+          </div>
+        </div>
+
+        <div>
+          <label for="subject" class="block text-sm text-stone-600 mb-1.5"
+            >Assunto</label
+          >
+          <div class="relative">
+            <select
+              id="subject"
+              v-model="form.subject"
+              required
+              class="w-full px-4 py-2.5 pr-10 text-sm border border-stone-200 rounded-lg focus:outline-none focus:border-stone-400 transition-colors bg-white appearance-none cursor-pointer"
+            >
+              <option value="" disabled>Selecione um assunto</option>
+              <option value="projeto">Novo projeto</option>
+              <option value="freelance">Trabalho freelance</option>
+              <option value="consultoria">Consultoria</option>
+              <option value="duvida">Dúvida</option>
+              <option value="outro">Outro</option>
+            </select>
+            <Icon
+              name="lucide:chevron-down"
+              class="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-stone-400 pointer-events-none"
+            />
+          </div>
+        </div>
+
+        <div>
+          <label for="message" class="block text-sm text-stone-600 mb-1.5"
+            >Mensagem</label
+          >
+          <textarea
+            id="message"
+            v-model="form.message"
+            rows="4"
+            placeholder="Conte um pouco sobre seu projeto ou dúvida..."
+            required
+            class="w-full px-4 py-2.5 text-sm border border-stone-200 rounded-lg focus:outline-none focus:border-stone-400 transition-colors resize-none"
+          ></textarea>
+        </div>
+
+        <button
+          type="submit"
+          :disabled="isSubmitting"
+          class="w-full sm:w-auto px-6 py-2.5 bg-stone-800 text-white text-sm font-medium rounded-lg hover:bg-stone-900 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          <span v-if="!isSubmitting">Enviar mensagem</span>
+          <span v-else class="flex items-center gap-2">
+            <Icon name="lucide:loader-2" class="w-4 h-4 animate-spin" />
+            Enviando...
+          </span>
+        </button>
+      </form>
+
+      <!-- Success Message -->
+      <div
+        v-if="submitSuccess"
+        class="mt-4 p-4 rounded-xl bg-green-50 border border-green-100"
+      >
+        <p class="text-sm text-green-700">
+          Mensagem enviada com sucesso! Retornarei em breve.
         </p>
       </div>
+    </section>
 
-      <div class="grid grid-cols-1 lg:grid-cols-5 gap-8 mb-8">
-        <div class="lg:col-span-3">
-          <Card class="h-full">
-            <CardHeader>
-              <CardTitle class="text-2xl">Envie uma mensagem 💬</CardTitle>
-              <div class="space-y-2 mt-3">
-                <div class="flex items-center gap-2 text-sm">
-                  <div class="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-                  <span class="text-foreground font-medium">Disponível para projetos</span>
-                </div>
-                <div class="flex items-center gap-2 text-sm text-muted-foreground">
-                  <Icon name="lucide:clock" class="w-4 h-4" />
-                  <span>Resposta em até 24h</span>
-                </div>
-              </div>
-            </CardHeader>
+    <!-- Direct Contact -->
+    <section class="mb-10">
+      <h2 class="text-lg font-semibold text-stone-900 mb-4">
+        Ou fale diretamente
+      </h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <!-- WhatsApp -->
+        <a
+          :href="whatsappLink"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="flex items-center gap-3 py-3 px-4 rounded-xl border border-green-200 bg-green-50 hover:bg-green-100 transition-colors"
+        >
+          <div
+            class="w-9 h-9 rounded-full bg-green-500 flex items-center justify-center shrink-0"
+          >
+            <Icon name="mdi:whatsapp" class="w-5 h-5 text-white" />
+          </div>
+          <div class="min-w-0">
+            <p class="font-medium text-green-800 text-sm">WhatsApp</p>
+            <p class="text-xs text-green-600">Resposta mais rápida</p>
+          </div>
+        </a>
 
-            <CardContent>
-              <form @submit.prevent="handleSubmit" class="space-y-6">
-                <div>
-                  <label for="name" class="block text-sm font-medium mb-2">
-                    Nome completo
-                  </label>
-                  <Input
-                    id="name"
-                    v-model="form.name"
-                    type="text"
-                    placeholder="Seu nome"
-                    required
-                    class="h-12 rounded-xl text-base"
-                  />
-                </div>
+        <!-- Email -->
+        <a
+          href="mailto:eu@patrickluz.dev"
+          class="flex items-center gap-3 py-3 px-4 rounded-xl border border-stone-100 bg-stone-50/50 hover:bg-stone-100 transition-colors"
+        >
+          <div
+            class="w-9 h-9 rounded-full bg-white border border-stone-100 flex items-center justify-center shrink-0"
+          >
+            <Icon name="lucide:mail" class="w-4 h-4 text-stone-500" />
+          </div>
+          <div class="min-w-0">
+            <p class="font-medium text-stone-800 text-sm">eu@patrickluz.dev</p>
+            <p class="text-xs text-stone-400">E-mail</p>
+          </div>
+        </a>
 
-                <div>
-                  <label for="email" class="block text-sm font-medium mb-2">
-                    Email
-                  </label>
-                  <Input
-                    id="email"
-                    v-model="form.email"
-                    type="email"
-                    placeholder="seu@email.com"
-                    required
-                    class="h-12 rounded-xl text-base"
-                  />
-                </div>
+        <!-- Phone -->
+        <a
+          href="tel:+5549999487330"
+          class="flex items-center gap-3 py-3 px-4 rounded-xl border border-stone-100 bg-stone-50/50 hover:bg-stone-100 transition-colors"
+        >
+          <div
+            class="w-9 h-9 rounded-full bg-white border border-stone-100 flex items-center justify-center shrink-0"
+          >
+            <Icon name="lucide:phone" class="w-4 h-4 text-stone-500" />
+          </div>
+          <div class="min-w-0">
+            <p class="font-medium text-stone-800 text-sm">+55 49 99948-7330</p>
+            <p class="text-xs text-stone-400">Telefone</p>
+          </div>
+        </a>
 
-                <div>
-                  <label for="subject" class="block text-sm font-medium mb-2">
-                    Assunto
-                  </label>
-                  <Input
-                    id="subject"
-                    v-model="form.subject"
-                    type="text"
-                    placeholder="Sobre o que você quer falar?"
-                    required
-                    class="h-12 rounded-xl text-base"
-                  />
-                </div>
-
-                <div>
-                  <label for="message" class="block text-sm font-medium mb-2">
-                    Mensagem
-                  </label>
-                  <Textarea
-                    id="message"
-                    v-model="form.message"
-                    placeholder="Conte-me sobre seu projeto ou ideia..."
-                    required
-                    class="rounded-xl text-base min-h-[150px]"
-                  />
-                </div>
-
-                <Button
-                  type="submit"
-                  class="w-full h-14 text-lg rounded-full"
-                  size="lg"
-                  :disabled="isSubmitting"
-                >
-                  <Icon
-                    v-if="!isSubmitting"
-                    name="lucide:send"
-                    class="w-5 h-5 mr-2"
-                  />
-                  <Icon
-                    v-else
-                    name="lucide:loader-2"
-                    class="w-5 h-5 mr-2 animate-spin"
-                  />
-                  {{ isSubmitting ? 'Enviando...' : 'Enviar Mensagem' }}
-                </Button>
-              </form>
-            </CardContent>
-          </Card>
-        </div>
-
-        <div class="lg:col-span-2 flex flex-col gap-6">
-          <Card class="flex-1">
-            <CardHeader>
-              <CardTitle class="text-lg">Contato Direto 📞</CardTitle>
-            </CardHeader>
-            <CardContent class="space-y-3">
-              <a
-                :href="contactLinks.whatsapp"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="flex items-center gap-3 px-4 py-3 bg-muted hover:bg-muted/80 rounded-xl transition-colors group"
-              >
-                <div class="w-12 h-12 rounded-full bg-green-500 flex items-center justify-center flex-shrink-0">
-                  <Icon name="mdi:whatsapp" class="text-white" :size="24"/>
-                </div>
-                <div class="flex-1 min-w-0">
-                  <p class="font-semibold text-sm">WhatsApp</p>
-                  <p class="text-xs text-muted-foreground">Resposta rápida</p>
-                </div>
-                <Icon name="lucide:external-link" class="w-4 h-4 text-muted-foreground group-hover:text-foreground" />
-              </a>
-
-              <a
-                :href="`mailto:${contactLinks.email}`"
-                class="flex items-center gap-3 px-4 py-3 bg-muted hover:bg-muted/80 rounded-xl transition-colors group"
-              >
-                <div class="w-12 h-12 rounded-full bg-blue-500 flex items-center justify-center flex-shrink-0">
-                  <Icon name="mdi:email" class="text-white" :size="24"/>
-                </div>
-                <div class="flex-1 min-w-0">
-                  <p class="font-semibold text-sm">Email</p>
-                  <p class="text-xs text-muted-foreground truncate">{{ contactLinks.email }}</p>
-                </div>
-                <Icon name="lucide:external-link" class="w-4 h-4 text-muted-foreground group-hover:text-foreground" />
-              </a>
-
-              <a
-                :href="contactLinks.linkedin"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="flex items-center gap-3 px-4 py-3 bg-muted hover:bg-muted/80 rounded-xl transition-colors group"
-              >
-                <div class="w-12 h-12 rounded-full bg-blue-700 flex items-center justify-center shrink-0">
-                  <Icon name="mdi:linkedin" class="text-white" :size="24"/>
-                </div>
-                <div class="flex-1 min-w-0">
-                  <p class="font-semibold text-sm">LinkedIn</p>
-                  <p class="text-xs text-muted-foreground">Perfil profissional</p>
-                </div>
-                <Icon name="lucide:external-link" class="w-4 h-4 text-muted-foreground group-hover:text-foreground" />
-              </a>
-            </CardContent>
-          </Card>
-
-          <Card class="flex-1">
-            <CardHeader>
-              <CardTitle class="text-lg">Redes Sociais 🌐</CardTitle>
-            </CardHeader>
-            <CardContent class="space-y-3">
-              <a
-                :href="contactLinks.github"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="flex items-center gap-3 px-4 py-3 bg-muted hover:bg-muted/80 rounded-xl transition-colors group"
-              >
-                <div class="w-10 h-10 rounded-full bg-gray-900 flex items-center justify-center flex-shrink-0">
-                  <Icon name="mdi:github" class="text-white" :size="20"/>
-                </div>
-                <div class="flex-1 min-w-0">
-                  <p class="font-semibold text-sm">GitHub</p>
-                </div>
-                <Icon name="lucide:external-link" class="w-4 h-4 text-muted-foreground group-hover:text-foreground" />
-              </a>
-
-              <a
-                :href="contactLinks.twitter"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="flex items-center gap-3 px-4 py-3 bg-muted hover:bg-muted/80 rounded-xl transition-colors group"
-              >
-                <div class="w-10 h-10 rounded-full bg-sky-500 flex items-center justify-center flex-shrink-0">
-                  <Icon name="mdi:twitter" class="text-white" :size="20"/>
-                </div>
-                <div class="flex-1 min-w-0">
-                  <p class="font-semibold text-sm">Twitter</p>
-                </div>
-                <Icon name="lucide:external-link" class="w-4 h-4 text-muted-foreground group-hover:text-foreground" />
-              </a>
-
-              <a
-                :href="contactLinks.instagram"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="flex items-center gap-3 px-4 py-3 bg-muted hover:bg-muted/80 rounded-xl transition-colors group"
-              >
-                <div class="w-10 h-10 rounded-full bg-gradient-to-br from-purple-500 via-pink-500 to-orange-500 flex items-center justify-center flex-shrink-0">
-                  <Icon name="mdi:instagram" class="text-white" :size="20"/>
-                </div>
-                <div class="flex-1 min-w-0">
-                  <p class="font-semibold text-sm">Instagram</p>
-                </div>
-                <Icon name="lucide:external-link" class="w-4 h-4 text-muted-foreground group-hover:text-foreground" />
-              </a>
-            </CardContent>
-          </Card>
+        <!-- Location -->
+        <div
+          class="flex items-center gap-3 py-3 px-4 rounded-xl border border-stone-100 bg-stone-50/50"
+        >
+          <div
+            class="w-9 h-9 rounded-full bg-white border border-stone-100 flex items-center justify-center shrink-0"
+          >
+            <Icon name="lucide:map-pin" class="w-4 h-4 text-stone-500" />
+          </div>
+          <div class="min-w-0">
+            <p class="font-medium text-stone-800 text-sm">Canoas, RS</p>
+            <p class="text-xs text-stone-400">Localização</p>
+          </div>
         </div>
       </div>
+    </section>
 
-      <Card class="border-2">
-        <CardHeader>
-          <CardTitle class="text-2xl">Disponibilidade & Serviços ✨</CardTitle>
-        </CardHeader>
+    <div class="h-px bg-stone-100 my-10" />
 
-        <CardContent>
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div class="space-y-4">
-              <div class="flex items-center gap-2">
-                <Icon name="lucide:briefcase" class="w-5 h-5 text-blue-500" />
-                <h3 class="font-semibold">Tipos de Projeto</h3>
-              </div>
-              <div class="space-y-2.5 text-sm">
-                <div class="flex items-start gap-2">
-                  <Icon name="lucide:check-circle" class="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
-                  <span class="text-muted-foreground">Aplicações web completas</span>
-                </div>
-                <div class="flex items-start gap-2">
-                  <Icon name="lucide:check-circle" class="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
-                  <span class="text-muted-foreground">APIs e backend</span>
-                </div>
-                <div class="flex items-start gap-2">
-                  <Icon name="lucide:check-circle" class="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
-                  <span class="text-muted-foreground">Automações e integrações</span>
-                </div>
-                <div class="flex items-start gap-2">
-                  <Icon name="lucide:check-circle" class="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
-                  <span class="text-muted-foreground">Consultoria técnica</span>
-                </div>
-                <div class="flex items-start gap-2">
-                  <Icon name="lucide:check-circle" class="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
-                  <span class="text-muted-foreground">Code review & mentoria</span>
-                </div>
-              </div>
-            </div>
-
-            <div class="space-y-4">
-              <div class="flex items-center gap-2">
-                <Icon name="lucide:clock" class="w-5 h-5 text-orange-500" />
-                <h3 class="font-semibold">Modalidades</h3>
-              </div>
-              <div class="space-y-2.5 text-sm">
-                <div class="flex items-start gap-2">
-                  <Icon name="lucide:zap" class="w-4 h-4 text-yellow-500 mt-0.5 flex-shrink-0" />
-                  <div>
-                    <p class="font-medium text-foreground">Freelance</p>
-                    <p class="text-xs text-muted-foreground">Projetos pontuais</p>
-                  </div>
-                </div>
-                <div class="flex items-start gap-2">
-                  <Icon name="lucide:calendar" class="w-4 h-4 text-yellow-500 mt-0.5 flex-shrink-0" />
-                  <div>
-                    <p class="font-medium text-foreground">Contratos</p>
-                    <p class="text-xs text-muted-foreground">Dedicação mensal</p>
-                  </div>
-                </div>
-                <div class="flex items-start gap-2">
-                  <Icon name="lucide:users" class="w-4 h-4 text-yellow-500 mt-0.5 flex-shrink-0" />
-                  <div>
-                    <p class="font-medium text-foreground">Consultoria</p>
-                    <p class="text-xs text-muted-foreground">Por hora ou pacote</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="space-y-4">
-              <div class="flex items-center gap-2">
-                <Icon name="lucide:info" class="w-5 h-5 text-cyan-500" />
-                <h3 class="font-semibold">Informações</h3>
-              </div>
-              <div class="space-y-2.5 text-sm">
-                <div class="flex items-start gap-2">
-                  <Icon name="lucide:message-circle" class="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
-                  <div>
-                    <p class="font-medium text-foreground">Resposta em 24h</p>
-                    <p class="text-xs text-muted-foreground">Dias úteis</p>
-                  </div>
-                </div>
-                <div class="flex items-start gap-2">
-                  <Icon name="lucide:globe" class="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
-                  <div>
-                    <p class="font-medium text-foreground">Remoto</p>
-                    <p class="text-xs text-muted-foreground">Trabalho 100% remoto</p>
-                  </div>
-                </div>
-                <div class="flex items-start gap-2">
-                  <Icon name="lucide:languages" class="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
-                  <div>
-                    <p class="font-medium text-foreground">Português (BR)</p>
-                    <p class="text-xs text-muted-foreground">Fluência completa</p>
-                  </div>
-                </div>
-              </div>
-            </div>
+    <!-- FAQ Section -->
+    <section class="mb-10">
+      <h2 class="text-lg font-semibold text-stone-900 mb-4">
+        Perguntas frequentes
+      </h2>
+      <div class="space-y-3">
+        <div
+          v-for="(faq, index) in faqs"
+          :key="index"
+          class="rounded-xl border border-stone-100 overflow-hidden"
+        >
+          <button
+            @click="toggleFaq(index)"
+            class="w-full flex items-center justify-between p-4 text-left hover:bg-stone-50 transition-colors"
+          >
+            <span class="text-sm font-medium text-stone-800">{{
+              faq.question
+            }}</span>
+            <Icon
+              name="lucide:chevron-down"
+              class="w-4 h-4 text-stone-400 transition-transform"
+              :class="{ 'rotate-180': openFaq === index }"
+            />
+          </button>
+          <div
+            v-show="openFaq === index"
+            class="px-4 pb-4 text-sm text-stone-600 leading-relaxed"
+          >
+            {{ faq.answer }}
           </div>
-        </CardContent>
-      </Card>
-    </main>
+        </div>
+      </div>
+    </section>
+
+    <!-- Social Links -->
+    <section class="mb-10">
+      <h2 class="text-lg font-semibold text-stone-900 mb-4">Redes sociais</h2>
+      <div class="flex flex-wrap gap-2">
+        <a
+          v-for="social in socials"
+          :key="social.name"
+          :href="social.link"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="flex items-center gap-2 py-2 px-3 rounded-lg border border-stone-100 hover:border-stone-200 hover:bg-stone-50 transition-all text-sm text-stone-600 hover:text-stone-800"
+        >
+          <Icon :name="social.icon" class="w-4 h-4" />
+          {{ social.name }}
+        </a>
+      </div>
+    </section>
+
+    <div class="h-px bg-stone-100 my-10" />
+
+    <!-- Business Info -->
+    <section>
+      <h2 class="text-sm font-medium text-stone-400 mb-3">
+        Informações empresariais
+      </h2>
+      <div class="flex flex-wrap gap-x-6 gap-y-2 text-sm text-stone-500">
+        <div class="flex items-center gap-2">
+          <Icon name="lucide:building" class="w-4 h-4 text-stone-400" />
+          <span>CNPJ: 47.383.701/0001-10</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <Icon name="lucide:map-pin" class="w-4 h-4 text-stone-400" />
+          <span>Canoas, RS - Brasil</span>
+        </div>
+      </div>
+    </section>
   </div>
 </template>
 
 <script setup lang="ts">
-import { Card, CardContent, CardHeader, CardTitle } from '~/components/ui/card'
-import { Input } from '~/components/ui/input'
-import { Textarea } from '~/components/ui/textarea'
-import { Button } from '~/components/ui/button'
-import { toast } from 'vue-sonner'
-
 definePageMeta({
-  layout: 'default'
-})
+  layout: "default",
+});
 
-// Usar composable de site settings
-const { getSetting } = useSiteSettings()
+// Form state
+const form = reactive({
+  name: "",
+  email: "",
+  subject: "",
+  message: "",
+});
 
-// Links de contato
-const contactLinks = computed(() => ({
-  whatsapp: getSetting('whatsapp'),
-  email: getSetting('email'),
-  linkedin: getSetting('linkedin'),
-  github: getSetting('github'),
-  twitter: getSetting('twitter'),
-  instagram: getSetting('instagram')
-}))
-
-const form = ref({
-  name: '',
-  email: '',
-  subject: '',
-  message: ''
-})
-
-const isSubmitting = ref(false)
+const isSubmitting = ref(false);
+const submitSuccess = ref(false);
 
 const handleSubmit = async () => {
-  if (!form.value.name || !form.value.email || !form.value.message) return
+  isSubmitting.value = true;
 
-  isSubmitting.value = true
+  // Simula envio (substituir por integração real depois)
+  await new Promise((resolve) => setTimeout(resolve, 1500));
 
-  try {
-    const response = await $fetch('/api/contact', {
-      method: 'POST',
-      body: {
-        name: form.value.name,
-        email: form.value.email,
-        subject: form.value.subject,
-        message: form.value.message
-      }
-    })
+  isSubmitting.value = false;
+  submitSuccess.value = true;
 
-    toast.success('🎉 Mensagem enviada com sucesso!', {
-      description: 'Retornaremos em breve. Obrigado pelo contato!',
-    })
+  // Reset form
+  form.name = "";
+  form.email = "";
+  form.subject = "";
+  form.message = "";
 
-    // Limpar formulário
-    form.value = {
-      name: '',
-      email: '',
-      subject: '',
-      message: ''
-    }
-  } catch (error: any) {
-    console.error('Erro ao enviar mensagem:', error)
+  // Hide success message after 5s
+  setTimeout(() => {
+    submitSuccess.value = false;
+  }, 5000);
+};
 
-    toast.error('Erro ao enviar mensagem', {
-      description: error.data?.statusMessage || 'Tente novamente mais tarde.',
-    })
-  } finally {
-    isSubmitting.value = false
-  }
-}
+// WhatsApp link
+const whatsappNumber = "5549999487330";
+const whatsappMessage = encodeURIComponent(
+  "Olá Patrick! Vi seu site e gostaria de conversar sobre um projeto."
+);
+const whatsappLink = `https://wa.me/${whatsappNumber}?text=${whatsappMessage}`;
+
+// FAQ state
+const openFaq = ref<number | null>(null);
+
+const toggleFaq = (index: number) => {
+  openFaq.value = openFaq.value === index ? null : index;
+};
+
+const faqs = [
+  {
+    question: "Quanto custa um projeto?",
+    answer:
+      "O valor depende da complexidade e escopo do projeto. Após entender suas necessidades, envio uma proposta detalhada com valores e prazos. Projetos simples começam a partir de R$ 3.000.",
+  },
+  {
+    question: "Qual o prazo de entrega?",
+    answer:
+      "Varia conforme o projeto. Um site institucional leva de 2 a 4 semanas. Aplicações mais complexas podem levar de 1 a 3 meses. Sempre defino prazos realistas na proposta.",
+  },
+  {
+    question: "Você trabalha com contrato?",
+    answer:
+      "Sim, todos os projetos são formalizados com contrato. Isso garante segurança para ambas as partes, com escopo, prazos e valores bem definidos.",
+  },
+  {
+    question: "Oferece suporte após a entrega?",
+    answer:
+      "Sim, ofereço 30 dias de suporte gratuito após a entrega para correções e pequenos ajustes. Também disponibilizo planos de manutenção mensal.",
+  },
+];
+
+// Social links
+const socials = [
+  {
+    name: "GitHub",
+    icon: "mdi:github",
+    link: "https://github.com/patrickluzdev",
+  },
+  {
+    name: "LinkedIn",
+    icon: "mdi:linkedin",
+    link: "https://www.linkedin.com/in/patrickluzdev",
+  },
+  {
+    name: "Instagram",
+    icon: "mdi:instagram",
+    link: "https://www.instagram.com/patrickluz_dev",
+  },
+];
 </script>

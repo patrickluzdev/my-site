@@ -29,8 +29,8 @@
     <div class="mb-10">
       <p class="text-stone-600 leading-relaxed mb-4 text-[15px]">
         Sou Patrick Luz, engenheiro de software com +5 anos de experiência em
-        empresas como Mercado Livre, Inter e Hurst Capital. Transformo ideias
-        em produtos digitais escaláveis e de alta qualidade.
+        empresas como Mercado Livre, Inter e Hurst Capital. Transformo ideias em
+        produtos digitais escaláveis e de alta qualidade.
       </p>
       <p class="text-stone-600 leading-relaxed text-[15px]">
         Trabalho com todo o ciclo de desenvolvimento — do planejamento à
@@ -152,7 +152,9 @@
             <h3 class="font-medium text-stone-800 text-[15px]">
               {{ exp.title }}
             </h3>
-            <p class="text-xs text-stone-400 mb-2">{{ exp.period }} · {{ calculateDuration(exp.period) }}</p>
+            <p class="text-xs text-stone-400 mb-2">
+              {{ exp.period }} · {{ calculateDuration(exp.period) }}
+            </p>
             <p class="text-stone-600 text-sm leading-relaxed">
               {{ exp.description }}
             </p>
@@ -216,7 +218,9 @@
       <h2 class="text-lg font-semibold text-stone-900 mb-3">
         Formação acadêmica
       </h2>
-      <p class="text-stone-500 text-[15px] mb-6">Minha trajetória educacional.</p>
+      <p class="text-stone-500 text-[15px] mb-6">
+        Minha trajetória educacional.
+      </p>
 
       <div class="space-y-6">
         <div v-for="edu in education" :key="edu.institution" class="flex gap-4">
@@ -301,5 +305,11 @@ useSeoMeta({
 });
 
 const { metricsAbout: metrics, serviceCategories } = useContent();
-const { experiences, education, skillCategories, testimonials, calculateDuration } = useProfile();
+const {
+  experiences,
+  education,
+  skillCategories,
+  testimonials,
+  calculateDuration,
+} = useProfile();
 </script>

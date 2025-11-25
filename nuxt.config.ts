@@ -7,6 +7,10 @@ export default defineNuxtConfig({
   // SSG para GitHub Pages
   ssr: true,
 
+  app: {
+    baseURL: '/my-site/',
+  },
+
   nitro: {
     preset: 'github-pages',
     prerender: {

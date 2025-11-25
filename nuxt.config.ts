@@ -42,7 +42,15 @@ export default defineNuxtConfig({
     'shadcn-nuxt',
     '@vueuse/nuxt',
     '@nuxtjs/seo',
+    'nuxt-gtag',
   ],
+
+  gtag: {
+    id: process.env.NUXT_PUBLIC_GTAG_ID || '',
+    config: {
+      anonymize_ip: true,
+    },
+  },
 
   // SEO configuration
   site: {

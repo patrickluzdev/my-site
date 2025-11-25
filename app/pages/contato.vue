@@ -287,6 +287,8 @@ useSeoMeta({
   title: "Contato - Patrick Luz",
   description:
     "Entre em contato para discutir seu projeto. Disponível para desenvolvimento web, APIs, automações e consultoria. Resposta em até 24h.",
+  keywords:
+    "contato, orçamento, freelancer, consultoria, projeto, whatsapp, email",
 });
 
 defineOgImage({

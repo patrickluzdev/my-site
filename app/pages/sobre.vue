@@ -298,6 +298,8 @@ useSeoMeta({
   description:
     "Engenheiro de Software com +6 anos de experiência. Especialista em desenvolvimento web, APIs, automações e DevOps. Disponível para novos projetos.",
   ogType: "profile",
+  keywords:
+    "sobre, experiência, habilidades, mercado livre, inter, desenvolvedor senior, carreira",
 });
 
 defineOgImage({

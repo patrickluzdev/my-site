@@ -4,7 +4,6 @@ export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
 
-  // SSG para GitHub Pages
   ssr: true,
 
   runtimeConfig: {
@@ -22,7 +21,7 @@ export default defineNuxtConfig({
   nitro: {
     preset: 'github-pages',
     prerender: {
-      routes: ['/', '/sobre', '/projetos', '/contato'],
+      routes: ['/', '/sobre', '/projetos', '/contato', '/blog'],
       crawlLinks: true,
     },
   },
@@ -34,6 +33,7 @@ export default defineNuxtConfig({
     ],
   },
   modules: [
+    '@nuxt/content',
     '@nuxt/eslint',
     '@nuxt/fonts',
     '@nuxt/hints',
@@ -45,6 +45,16 @@ export default defineNuxtConfig({
     'nuxt-gtag',
   ],
 
+  content: {
+    build: {
+      markdown: {
+        highlight: {
+          theme: 'github-light',
+        },
+      },
+    },
+  },
+
   gtag: {
     id: process.env.NUXT_PUBLIC_GTAG_ID || '',
     config: {
@@ -52,7 +62,6 @@ export default defineNuxtConfig({
     },
   },
 
-  // SEO configuration
   site: {
     url: 'https://patrickluz.dev',
     name: 'Patrick Luz',

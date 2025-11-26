@@ -1,7 +1,6 @@
 <template>
   <aside class="w-[180px]">
     <div>
-      <!-- Avatar -->
       <div class="mb-8 pl-1">
         <NuxtLink to="/" class="block">
           <div
@@ -16,7 +15,6 @@
         </NuxtLink>
       </div>
 
-      <!-- Navigation Menu -->
       <nav class="space-y-0.5">
         <NuxtLink
           v-for="item in menuItems"
@@ -40,9 +38,10 @@
 const route = useRoute();
 
 const menuItems = [
-  { label: "Home", to: "/" },
+  { label: "Resumo", to: "/" },
   { label: "Sobre mim", to: "/sobre" },
   { label: "Meus projetos", to: "/projetos" },
+  { label: "Blog", to: "/blog" },
   { label: "Contato", to: "/contato" },
 ];
 

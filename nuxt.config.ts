@@ -65,7 +65,7 @@ export default defineNuxtConfig({
   site: {
     url: 'https://patrickluz.dev',
     name: 'Patrick Luz',
-    description: 'Engenheiro de Software especializado em aplicações web, APIs e automações.',
+    description: 'Parceiro técnico para seu negócio. Assumo projetos do zero ou reforço sua equipe existente.',
     defaultLocale: 'pt-BR',
   },
 

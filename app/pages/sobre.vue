@@ -4,7 +4,7 @@
     <header class="mb-6">
       <h1 class="text-2xl font-semibold text-stone-900 mb-1">Quem sou eu</h1>
       <p class="text-stone-500 italic text-[15px]">
-        Engenheiro de Software focado em soluções escaláveis
+        Seu parceiro técnico para tirar ideias do papel
       </p>
     </header>
 
@@ -29,12 +29,14 @@
     <div class="mb-10">
       <p class="text-stone-600 leading-relaxed mb-4 text-[15px]">
         Sou Patrick Luz, engenheiro de software com +6 anos de experiência em
-        empresas como Mercado Livre, Inter e Hurst Capital. Transformo ideias em
-        produtos digitais escaláveis e de alta qualidade.
+        empresas como Mercado Livre, Inter e Compasso UOL. Atuo como parceiro
+        técnico de empresas que precisam de alguém de confiança para cuidar de
+        toda a parte de tecnologia.
       </p>
       <p class="text-stone-600 leading-relaxed text-[15px]">
-        Trabalho com todo o ciclo de desenvolvimento — do planejamento à
-        entrega. Se você precisa de um parceiro técnico para seu projeto,
+        Posso assumir a responsabilidade técnica do zero ou contribuir com
+        projetos e equipes que já existem. Se você precisa de um braço direito
+        em tecnologia,
         <NuxtLink
           to="/contato"
           class="text-stone-800 underline underline-offset-2 decoration-stone-300 hover:decoration-stone-500"
@@ -266,11 +268,11 @@
       class="p-6 rounded-xl border-2 border-dashed border-stone-200 text-center"
     >
       <h2 class="text-lg font-semibold text-stone-900 mb-2">
-        Vamos trabalhar juntos?
+        Precisa de um parceiro técnico?
       </h2>
       <p class="text-sm text-stone-500 mb-4 max-w-md mx-auto">
-        Estou disponível para projetos freelance, consultoria ou parcerias.
-        Conte-me sobre sua ideia.
+        Assumo projetos do zero ou reforço sua equipe existente. Vamos
+        conversar sobre como posso ajudar.
       </p>
       <NuxtLink
         to="/contato"
@@ -300,17 +302,17 @@ definePageMeta({
 useSeoMeta({
   title: "Sobre mim - Patrick Luz",
   description:
-    "Engenheiro de Software com +6 anos de experiência. Especialista em desenvolvimento web, APIs, automações e DevOps. Disponível para novos projetos.",
+    "Parceiro técnico com +6 anos de experiência. Assumo projetos do zero ou reforço sua equipe. Experiência em Mercado Livre, Inter e Compasso UOL.",
   ogType: "profile",
   keywords:
-    "sobre, experiência, habilidades, mercado livre, inter, desenvolvedor senior, carreira",
+    "parceiro técnico, CTO as a service, mercado livre, inter, desenvolvedor senior, braço técnico",
 });
 
 defineOgImage({
   component: "OgImageTemplate",
   props: {
     title: "Sobre Mim",
-    description: "Engenheiro de Software com +6 anos de experiência.",
+    description: "Parceiro técnico com +6 anos de experiência.",
   },
 });
 

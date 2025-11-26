@@ -27,8 +27,8 @@
 
     <!-- Value Proposition -->
     <p class="text-stone-600 leading-relaxed mb-8 text-[15px]">
-      Transformo ideias em produtos digitais. Desenvolvo aplicações web, APIs e
-      automações que resolvem problemas reais e escalam junto com seu negócio.
+      Seu parceiro técnico de confiança. Assumo projetos do zero ou reforço sua
+      equipe existente — para você focar no que importa.
     </p>
 
     <!-- CTA Buttons -->
@@ -173,10 +173,11 @@
       class="p-6 rounded-xl border-2 border-dashed border-stone-200 text-center"
     >
       <h2 class="text-lg font-semibold text-stone-900 mb-2">
-        Tem um projeto em mente?
+        Precisa de um parceiro técnico?
       </h2>
       <p class="text-sm text-stone-500 mb-4 max-w-md mx-auto">
-        Conte-me sobre sua ideia. Respondo em até 24h.
+        Vamos conversar sobre como posso ajudar seu negócio. Respondo em até
+        24h.
       </p>
       <NuxtLink
         to="/contato"
@@ -199,19 +200,18 @@ definePageMeta({
 });
 
 useSeoMeta({
-  title: "Patrick Luz - Engenheiro de Software",
+  title: "Patrick Luz - Parceiro Técnico para seu Negócio",
   description:
-    "Desenvolvedor Full Stack especializado em aplicações web, APIs e automações. +6 anos de experiência em empresas como Mercado Livre, Inter e Hurst Capital.",
+    "Seu parceiro técnico de confiança. Assumo projetos do zero ou reforço sua equipe. +6 anos em Mercado Livre, Inter e Compasso UOL.",
   keywords:
-    "desenvolvedor full stack, engenheiro de software, vue.js, node.js, go, react, freelancer, automações, APIs",
+    "parceiro técnico, CTO as a service, desenvolvedor full stack, consultoria técnica, terceirização de TI, desenvolvimento sob demanda",
 });
 
 defineOgImage({
   component: "OgImageTemplate",
   props: {
-    title: "Engenheiro de Software",
-    description:
-      "Desenvolvedor Full Stack especializado em aplicações web, APIs e automações.",
+    title: "Parceiro Técnico",
+    description: "Assumo projetos do zero ou reforço sua equipe.",
   },
 });
 

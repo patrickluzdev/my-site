@@ -2,16 +2,60 @@ import type { Project, ProjectCategory, ProjectType } from "~/data";
 import { projects, projectTypes } from "~/data";
 
 export const useProjects = () => {
+  const route = useRoute();
+  const router = useRouter();
+
   const {
     trackProjectFilterClick,
     trackProjectSearch,
     trackProjectClearFilters,
   } = useAnalytics();
 
-  const searchQuery = ref("");
-  const selectedTypes = ref<ProjectType[]>([]);
-  const selectedTechs = ref<string[]>([]);
+  const getInitialSearch = (): string => {
+    const q = route.query.q;
+    return typeof q === "string" ? q : "";
+  };
+
+  const getInitialTypes = (): ProjectType[] => {
+    const types = route.query.type;
+    if (!types) return [];
+    const typeArray = typeof types === "string" ? types.split(",") : types;
+    const validTypes = projectTypes.map((t) => t.value);
+    return typeArray.filter((t): t is ProjectType =>
+      validTypes.includes(t as ProjectType)
+    );
+  };
+
+  const getInitialTechs = (): string[] => {
+    const techs = route.query.tech;
+    if (!techs) return [];
+    return typeof techs === "string" ? techs.split(",") : (techs as string[]);
+  };
+
+  const searchQuery = ref(getInitialSearch());
+  const selectedTypes = ref<ProjectType[]>(getInitialTypes());
+  const selectedTechs = ref<string[]>(getInitialTechs());
   const searchDebounceTimeout = ref<NodeJS.Timeout | null>(null);
+
+  const updateUrlQuery = () => {
+    const query: Record<string, string | undefined> = {};
+
+    if (searchQuery.value) {
+      query.q = searchQuery.value;
+    }
+    if (selectedTypes.value.length > 0) {
+      query.type = selectedTypes.value.join(",");
+    }
+    if (selectedTechs.value.length > 0) {
+      query.tech = selectedTechs.value.join(",");
+    }
+
+    router.replace({ query });
+  };
+
+  watch([searchQuery, selectedTypes, selectedTechs], updateUrlQuery, {
+    deep: true,
+  });
 
   const availableTypes = computed(() => {
     const types = new Set(projects.map((p) => p.type));

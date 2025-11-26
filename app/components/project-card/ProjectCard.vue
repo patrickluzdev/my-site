@@ -1,6 +1,6 @@
 <template>
   <div
-    class="p-5 rounded-xl border border-stone-100 hover:border-stone-200 hover:shadow-sm transition-all bg-white"
+    class="p-5 rounded-xl border border-stone-100 hover:border-stone-200 hover:shadow-sm transition-all bg-white flex flex-col min-h-[320px]"
   >
     <!-- Image -->
     <div
@@ -40,7 +40,7 @@
     </p>
 
     <!-- Stack -->
-    <div class="flex flex-wrap gap-1.5 mb-4">
+    <div class="flex flex-wrap gap-1.5 mb-4 content-start">
       <span
         v-for="tech in project.stack.slice(0, 4)"
         :key="tech"
@@ -57,7 +57,7 @@
     </div>
 
     <!-- Footer -->
-    <div class="flex items-center justify-between">
+    <div class="flex items-center justify-between mt-auto">
       <!-- Year -->
       <span class="text-xs text-stone-400">{{ project.year }}</span>
 
